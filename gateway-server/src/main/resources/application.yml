@@ -1,0 +1,31 @@
+# 服务器相关配置
+server:
+  servlet:
+    context-path: / # 为了便于开发此处省略应用程序上下文
+  port: 8501 # 为了便于开发此处使用 http 默认端口
+
+# spring 相关配置
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user/**
+        - id: martyr-service
+          uri: lb://martyr-service
+          predicates:
+            - Path=/api/martyr/**
+        - id: record-service
+          uri: lb://record-service
+          predicates:
+            - Path=/api/record/**
+        - id: place-service
+          uri: lb://place-service
+          predicates:
+            - Path=/api/place/**

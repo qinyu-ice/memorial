@@ -1,0 +1,12 @@
+nacos-2.5.1/
+external-server/
+sentinel/
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr

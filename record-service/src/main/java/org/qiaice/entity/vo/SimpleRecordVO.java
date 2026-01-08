@@ -1,0 +1,21 @@
+package org.qiaice.entity.vo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+public class SimpleRecordVO {
+
+    private Integer rid;
+
+    private String uname;
+
+    private String name;
+
+    private String message;
+
+    private LocalDateTime time;
+}
