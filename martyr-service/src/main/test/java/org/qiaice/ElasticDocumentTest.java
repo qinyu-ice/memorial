@@ -1,4 +1,4 @@
-package org.qiaice;
+package org.qinyu;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.mapping.DateProperty;
@@ -25,8 +25,8 @@ import org.elasticsearch.client.RestClient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.qiaice.entity.table.Martyr;
-import org.qiaice.service.MartyrService;
+import org.qinyu.entity.table.Martyr;
+import org.qinyu.service.MartyrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
