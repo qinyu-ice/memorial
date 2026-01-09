@@ -7,14 +7,14 @@ import lombok.Data;
 @Data
 public class Place {
 
-    @TableId(value = "pid", type = IdType.AUTO)
-    private Integer pid;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String name;
 
     private String img;
 
-    private String intro;
+    private String introduction;
 
     private String phone;
 

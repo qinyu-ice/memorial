@@ -7,9 +7,9 @@ import java.util.Map;
 
 public interface UserService extends IService<User> {
 
-    void register(String uname, String passwd, String passwd2);
+    void register(String username, String password, String password2);
 
-    Map<String, Object> login(String uname, String passwd);
+    Map<String, Object> login(String username, String password);
 
-    void reset(String uname, String passwd, String passwd2);
+    void reset(String username, String password, String password2);
 }

@@ -21,21 +21,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private RedisTemplate redisTemplate;
     @Override
-    public void register(String uname, String passwd, String passwd2) {
-        if (!passwd.equals(passwd2)) throw new CustomException("前后两段密码不一致");
-        User record = lambdaQuery().eq(User::getUname, uname).one();
-        if (record != null) throw new CustomException("用户名" + uname + "已被占用");
-        passwd = DigestUtils.md5DigestAsHex(passwd.getBytes(StandardCharsets.UTF_8));
-        if (!save(new User(null, uname, passwd))) throw new CustomException("用户注册失败");
+    public void register(String username, String password, String password2) {
+        if (!password.equals(password2)) throw new CustomException("前后两段密码不一致");
+        User record = lambdaQuery().eq(User::getUsername, username).one();
+        if (record != null) throw new CustomException("用户名" + username + "已被占用");
+        password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
+        if (!save(new User(null, username, password,null,null,null,null,null))) throw new CustomException("用户注册失败");
 
     }
 
     @Override
-    public Map<String, Object> login(String uname, String passwd) {
-        User record = lambdaQuery().eq(User::getUname, uname).one();
-        if (record == null) throw new CustomException("用户" + uname + "未注册");
-        passwd = DigestUtils.md5DigestAsHex(passwd.getBytes(StandardCharsets.UTF_8));
-        if (!record.getPasswd().equals(passwd))
+    public Map<String, Object> login(String username, String password) {
+        User record = lambdaQuery().eq(User::getUsername, username).one();
+        if (record == null) throw new CustomException("用户" + username + "未注册");
+        password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
+        if (!record.getPassword().equals(password))
             throw new CustomException("用户名或密码错误");
         Map<String, Object> token = TokenUtil.createToken(record);
         redisTemplate.opsForValue().set("token" , token.get("token"), Duration.ofMinutes(30));
@@ -44,15 +44,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public void reset(String uname, String passwd, String passwd2) {
-        User record = lambdaQuery().eq(User::getUname, uname).one();
-        if (record == null) throw new CustomException("用户" + uname + "未注册");
-        String tmpPasswd = DigestUtils.md5DigestAsHex(passwd.getBytes(StandardCharsets.UTF_8));
-        if (!record.getPasswd().equals(tmpPasswd))
+    public void reset(String username, String password, String password2) {
+        User record = lambdaQuery().eq(User::getUsername, username).one();
+        if (record == null) throw new CustomException("用户" + username + "未注册");
+        String tmpPassword = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
+        if (!record.getPassword().equals(tmpPassword))
             throw new CustomException("用户名或密码错误");
-        if (passwd.equals(passwd2)) throw new CustomException("新旧密码不能一致");
-        passwd2 = DigestUtils.md5DigestAsHex(passwd2.getBytes(StandardCharsets.UTF_8));
-        if (!lambdaUpdate().eq(User::getUname, uname).set(User::getPasswd, passwd2).update())
+        if (password.equals(password2)) throw new CustomException("新旧密码不能一致");
+        password2 = DigestUtils.md5DigestAsHex(password2.getBytes(StandardCharsets.UTF_8));
+        if (!lambdaUpdate().eq(User::getUsername, username).set(User::getPassword, password2).update())
             throw new CustomException("重置用户密码失败");
     }
 }

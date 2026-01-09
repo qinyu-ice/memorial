@@ -62,11 +62,11 @@ public class TokenUtil {
      */
     public static Map<String, Object> createToken(User user) {
         return Map.of(
-                "uid", user.getUid(),
-                "uname", user.getUname(),
+                "id", user.getId(),
+                "username", user.getUsername(),
                 "token", createToken(Map.of("typ", "JWT"), Map.of(
-                        "uid", user.getUid(),
-                        "uname", user.getUname()
+                        "id", user.getId(),
+                        "username", user.getUsername()
                 ))
         );
     }

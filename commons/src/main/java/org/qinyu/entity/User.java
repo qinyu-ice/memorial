@@ -11,10 +11,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
 
-    @TableId(value = "uid", type = IdType.AUTO)
-    private Integer uid;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-    private String uname;
+    private String username;
 
-    private String passwd;
+    private String password;
+
+    private String realName;
+
+    private String email;
+
+    private String phone;
+
+    private Integer permission;
+
+    private Integer isDelete;
 }

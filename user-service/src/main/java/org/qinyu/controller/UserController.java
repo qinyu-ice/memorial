@@ -21,25 +21,25 @@ public class UserController {
 
     @PostMapping(value = "/register")
     public Result<Object> register(@RequestBody UserRegisterDTO dto) {
-        userService.register(dto.getUname(), dto.getPasswd(), dto.getPasswd2());
-        return Result.ok("用户" + dto.getUname() + "注册成功");
+        userService.register(dto.getUsername(), dto.getPassword(), dto.getPassword2());
+        return Result.ok("用户" + dto.getUsername() + "注册成功");
     }
 
     @PostMapping(value = "/login")
     public Result<Map<String, Object>> login(@RequestBody UserLoginDTO dto) {
-        Map<String, Object> data = userService.login(dto.getUname(), dto.getPasswd());
-        return Result.ok("用户" + dto.getUname() + "登录成功", data);
+        Map<String, Object> data = userService.login(dto.getUsername(), dto.getPassword());
+        return Result.ok("用户" + dto.getUsername() + "登录成功", data);
     }
 
     @PutMapping(value = "/reset")
     public Result<Object> reset(@RequestBody UserResetDTO dto) {
-        userService.reset(dto.getUname(), dto.getPasswd(), dto.getPasswd2());
-        return Result.ok("用户" + dto.getUname() + "重置密码成功");
+        userService.reset(dto.getUsername(), dto.getPassword(), dto.getPassword2());
+        return Result.ok("用户" + dto.getUsername() + "重置密码成功");
     }
 
-    @GetMapping(value = "/simple/{uid}")
-    public Result<SimpleUserVO> findSimpleById(@PathVariable Integer uid) {
-        User user = userService.getById(uid);
-        return Result.ok("成功获取uid为" + uid + "的简要用户信息", new SimpleUserVO(user));
+    @GetMapping(value = "/simple/{id}")
+    public Result<SimpleUserVO> findSimpleById(@PathVariable Integer id) {
+        User user = userService.getById(id);
+        return Result.ok("成功获取uid为" + id + "的简要用户信息", new SimpleUserVO(user));
     }
 }

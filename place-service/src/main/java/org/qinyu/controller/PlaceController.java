@@ -28,11 +28,11 @@ public class PlaceController {
                 placeService.list().stream().map(SimplePlaceVO::new).toList());
     }
 
-    @GetMapping(value = "/{pid}")
-    public Result<Place> findById(@PathVariable Integer pid) {
-        Place place = placeService.getById(pid);
+    @GetMapping(value = "/{id}")
+    public Result<Place> findById(@PathVariable Integer id) {
+        Place place = placeService.getById(id);
         place.setImg("https://www.sctyjrsw.com/image" + place.getImg());
-        return Result.ok("成功获取id为" + pid + "的悼念地点信息", place);
+        return Result.ok("成功获取id为" + id + "的悼念地点信息", place);
     }
 
     @GetMapping(value = "/ip")

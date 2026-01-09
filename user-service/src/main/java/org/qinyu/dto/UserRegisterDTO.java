@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class UserRegisterDTO {
 
-    private String uname;
+    private String username;
 
-    private String passwd;
+    private String password;
 
-    private String passwd2;
+    private String password2;
 }

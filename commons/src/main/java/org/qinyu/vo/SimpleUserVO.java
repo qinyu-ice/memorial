@@ -8,12 +8,12 @@ import org.qinyu.entity.User;
 @NoArgsConstructor
 public class SimpleUserVO {
 
-    private Integer uid;
+    private Integer id;
 
-    private String uname;
+    private String username;
 
     public SimpleUserVO(User user) {
-        this.uid = user.getUid();
-        this.uname = user.getUname();
+        this.id = user.getId();
+        this.username = user.getUsername();
     }
 }
