@@ -24,11 +24,11 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     public List<SimpleRecordVO> findByPage(Integer page, Integer pageSize) {
         Page<Record> paged = lambdaQuery().orderByDesc(Record::getTime).page(Page.of(page, pageSize));
         return paged.getRecords().stream().map(record -> {
-            String uname = userClient.findSimpleById(record.getUid()).data().getUname();
+            String username = userClient.findSimpleById(record.getUid()).data().getUsername();
             String name = martyrClient.findSimpleById(record.getMid()).data().getName();
             String message = record.getMessage();
             message = message.length() > 23 ? message.substring(0, 23) + "......" : message;
-            return new SimpleRecordVO(record.getRid(), uname, name, message, record.getTime());
+            return new SimpleRecordVO(record.getRid(), username, name, message, record.getTime());
         }).toList();
     }
 }

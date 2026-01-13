@@ -9,8 +9,6 @@ spring:
   application:
     name: gateway-server
   cloud:
-    nacos:
-      server-addr: localhost:8848
     gateway:
       routes:
         - id: user-service

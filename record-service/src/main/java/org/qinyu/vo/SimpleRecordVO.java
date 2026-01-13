@@ -11,7 +11,7 @@ public class SimpleRecordVO {
 
     private Integer rid;
 
-    private String uname;
+    private String username;
 
     private String name;
 

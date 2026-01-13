@@ -4,6 +4,13 @@ server:
     context-path: / # 为了便于开发此处省略应用程序上下文
   port: 8110 # 为了便于开发此处使用 http 默认端口
 
+# Token相关配置（与代码中@Value的key一一对应）
+token:
+  key: 9Z8k7X6j5B4n3M2b1V0c9L8K7J6H5G4F3D2S1A0z9x8c7v6b5n4m3l2k1j0h9g8f7d6s5a4    # Token加密密钥（建议使用32位以上随机字符串）
+  iss: qinyu              # Token签发者（如：你的系统名称/域名）
+  sub: user-auth                     # Token主题（如：用户认证）
+  exp: 86400                         # Token过期时间（单位：秒，86400=24小时）
+
 # spring 相关配置
 spring:
   datasource:

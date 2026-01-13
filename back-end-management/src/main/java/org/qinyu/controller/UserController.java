@@ -8,5 +8,8 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserController {
 
-
+    @GetMapping("/hello")
+    public void sayHello() {
+        System.out.println("hello world");
+    }
 }
