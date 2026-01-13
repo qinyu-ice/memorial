@@ -36,5 +36,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <!-- Spring Boot 整合 Quartz -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+        <!-- 添加日志依赖，方便查看执行日志 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version>
+        </dependency>
     </dependencies>
 </project>
