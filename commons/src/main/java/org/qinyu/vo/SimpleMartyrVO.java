@@ -8,12 +8,12 @@ import org.qinyu.entity.Martyr;
 @NoArgsConstructor
 public class SimpleMartyrVO {
 
-    private Integer mid;
+    private Integer id;
 
     private String name;
 
     public SimpleMartyrVO(Martyr martyr) {
-        this.mid = martyr.getMid();
+        this.id = martyr.getId();
         this.name = martyr.getName();
     }
 }

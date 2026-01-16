@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class RecordDTO {
 
-    private Integer uid;
+    private Integer userId;
 
-    private Integer mid;
+    private Integer martyrId;
 
     private Integer ignite;
 

@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Record {
 
-    @TableId(value = "rid", type = IdType.AUTO)
-    private Integer rid;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
-    private Integer uid;
+    private Integer userId;
 
-    private Integer mid;
+    private Integer martyrId;
 
     private Integer ignite;
 

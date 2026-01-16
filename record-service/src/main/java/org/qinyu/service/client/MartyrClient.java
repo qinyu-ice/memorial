@@ -9,6 +9,6 @@ import org.springframework.web.service.annotation.HttpExchange;
 @HttpExchange(value = "/api/martyr")
 public interface MartyrClient {
 
-    @GetExchange(value = "/simple/{mid}")
-    Result<SimpleMartyrVO> findSimpleById(@PathVariable Integer mid);
+    @GetExchange(value = "/simple/{id}")
+    Result<SimpleMartyrVO> findSimpleById(@PathVariable Integer id);
 }

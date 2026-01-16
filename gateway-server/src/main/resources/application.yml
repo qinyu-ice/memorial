@@ -11,6 +11,10 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: back-end-management
+          uri: lb://back-end
+          predicates:
+            - Path=/api/back-end/**
         - id: user-service
           uri: lb://user-service
           predicates:
@@ -27,3 +31,23 @@ spring:
           uri: lb://place-service
           predicates:
             - Path=/api/place/**
+
+      # 跨域配置（解决前端跨域问题）
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"  # 允许所有源（生产环境需指定具体域名）
+            allowedMethods:  # 允许的请求方法
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"  # 允许所有请求头
+            allowCredentials: true  # 允许携带Cookie
+
+# 暴露网关端点（用于查看路由信息）
+management:
+  endpoints:
+    web:
+      exposure:
+          include: gateway/routes  # 访问 http://localhost:8080/actuator/gateway/routes 可查看路由列表

@@ -9,6 +9,6 @@ import org.springframework.web.service.annotation.HttpExchange;
 @HttpExchange(value = "/api/user")
 public interface UserClient {
 
-    @GetExchange(value = "/simple/{uid}")
-    Result<SimpleUserVO> findSimpleById(@PathVariable Integer uid);
+    @GetExchange(value = "/simple/{id}")
+    Result<SimpleUserVO> findSimpleById(@PathVariable Integer id);
 }

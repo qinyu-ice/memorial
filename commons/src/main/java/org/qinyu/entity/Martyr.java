@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class Martyr {
 
-    @TableId(value = "mid", type = IdType.AUTO)
-    private Integer mid;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
 
     private String photo;
 

@@ -20,11 +20,11 @@ public class MartyrController {
 
     private final MartyrService martyrService;
 
-    @GetMapping(value = "/{mid}")
-    public Result<Martyr> findById(@PathVariable Integer mid) {
-        Martyr martyr = martyrService.getById(mid);
+    @GetMapping(value = "/{id}")
+    public Result<Martyr> findById(@PathVariable Integer id) {
+        Martyr martyr = martyrService.getById(id);
         martyr.setPhoto("https://www.sctyjrsw.com/image" + martyr.getPhoto());
-        return Result.ok("成功获取id为" + mid + "的烈士信息", martyr);
+        return Result.ok("成功获取id为" + id + "的烈士信息", martyr);
     }
 
     @GetMapping(value = "/{page}/{pageSize}")
@@ -47,10 +47,10 @@ public class MartyrController {
 //    }
 
 
-    @GetMapping(value = "/simple/{mid}")
-    public Result<SimpleMartyrVO> findSimpleById(@PathVariable Integer mid) {
-        Martyr martyr = martyrService.getById(mid);
-        return Result.ok("成功获取mid为" + mid + "的简要烈士信息", new SimpleMartyrVO(martyr));
+    @GetMapping(value = "/simple/{id}")
+    public Result<SimpleMartyrVO> findSimpleById(@PathVariable Integer id) {
+        Martyr martyr = martyrService.getById(id);
+        return Result.ok("成功获取mid为" + id + "的简要烈士信息", new SimpleMartyrVO(martyr));
     }
 
     @GetMapping(value = "/smartSearch/{page}/{pageSize}")

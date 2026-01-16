@@ -5,14 +5,14 @@ import org.qinyu.entity.Martyr;
 
 @Data
 public class SimpleSmartMartyrVO {
-    private Integer mid;
+    private Integer id;
 
     private String name;
 
     private Double score;
 
     public SimpleSmartMartyrVO(Martyr martyr) {
-        this.mid = martyr.getMid();
+        this.id = martyr.getId();
         this.name = martyr.getName();
     }
 }

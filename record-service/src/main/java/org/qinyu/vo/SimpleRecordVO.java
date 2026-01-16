@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class SimpleRecordVO {
 
-    private Integer rid;
+    private Integer id;
 
     private String username;
 
