@@ -1,0 +1,81 @@
+# 日志配置
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+  file:
+    path: ./logs # 相对于项目根路径
+    name: ${logging.file.path}/application.log
+  pattern:
+    console: "%d{yyyy-MM-dd'T'HH:mm:ssXXX} %clr(%5p) %clr(${PID:-}){magenta} %esb(){APPLICATION_NAME}%esb{APPLICATION_GROUP}[%15.15t] %clr(%-40.40logger{40}){cyan} : %m%n%wEx"
+    file: "%d{yyyy-MM-dd'T'HH:mm:ssXXX} %5p ${PID:-} %esb(){APPLICATION_NAME}%esb{APPLICATION_GROUP}[%15.15t] %-40.40logger{40} : %m%n%wEx"
+  logback:
+    rollingpolicy: # 文件滚动策略配置
+      file-name-pattern: ${logging.file.path}/spring-%d{yyyy-MM-dd}-no-%i.log
+      max-file-size: 10MB
+      max-history: 7 # 单位为天
+  level: # 日志级别配置
+    sql: debug
+    web: debug
+    org.qinyu: debug
+
+# 服务器配置
+server:
+  port: 8801
+
+# spring 配置
+spring:
+  application:
+    name: application
+  mvc:
+    servlet: # servlet 配置
+      path: /api # 请求基路径配置, 仅限 spring 端点
+    log-request-details: true # 展示详细请求信息
+    problemdetails: # problemdetails 配置
+      enabled: true
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate: # 显示 sql 语句
+        format_sql: true
+        use_sql_comments: true
+  datasource: # 数据源配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/memorial?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true&autoReconnect=true&maxReconnects=3
+    username: root
+    password: 321520
+  security:
+    jjwt: # jwt 配置
+      secret: LjB6uPiYtZPETTkhEVkyp/uF9EhjfIs4956TXt8bias=
+      expiration: 1h # 支持的时间单位: m, h, d, 不加单位默认为秒
+  data:
+    redis: # redis 配置
+      url: redis://:321520@localhost:6379/0
+      properties:
+        timeout: 1 # 验证码时效, 单位为分
+        prefix:
+          auth-code: 'auth:code:'
+          blacklist-jwt: 'blacklist:jwt:'
+  mail: # 邮件配置
+    host: smtp.qq.com
+    port: 465 # 465 或 587
+    username: qinyu.xuan@qq.com
+    password: tqwyblyqamowbaid # 特别注意, 这里是授权码不是邮箱密码
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+  thymeleaf: # 邮件模板引擎配置
+    cache: false
+    encoding: UTF-8
+    mode: HTML
+    suffix: .html
+    servlet:
+      content-type: text/html
+    prefix: classpath:/templates/
+    properties:
+      template: code
+      from: ${spring.mail.username}
+      subject: 来自新网页或移动设备的访问
+      defaults: '%s 您好, 您的验证码是 %s, 仅 %s 分钟内有效'

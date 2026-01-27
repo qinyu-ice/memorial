@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/back-end", produces = "application/json; charset=utf-8")
+@RequestMapping(value = "/api/back-end", produces = "application/json; charset=utf-8")
 @AllArgsConstructor
 public class UserController {
 

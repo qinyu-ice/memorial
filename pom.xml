@@ -25,6 +25,7 @@
     <module>place-service</module>
     <module>gateway-server</module>
     <module>story-service</module>
+      <module>email-login</module>
   </modules>
 
   <properties>

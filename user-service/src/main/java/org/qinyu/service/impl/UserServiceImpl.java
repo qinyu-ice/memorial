@@ -13,6 +13,7 @@ import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -20,13 +21,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private RedisTemplate redisTemplate;
+
     @Override
     public void register(String username, String password, String password2) {
         if (!password.equals(password2)) throw new CustomException("前后两段密码不一致");
         User record = lambdaQuery().eq(User::getUsername, username).one();
         if (record != null) throw new CustomException("用户名" + username + "已被占用");
         password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
-        if (!save(new User(null, username, password,null,null,null,null,null))) throw new CustomException("用户注册失败");
+        if (!save(new User(null, username, password, null, null, null, null, null)))
+            throw new CustomException("用户注册失败");
 
     }
 
@@ -34,12 +37,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Map<String, Object> login(String username, String password) {
         User record = lambdaQuery().eq(User::getUsername, username).one();
         if (record == null) throw new CustomException("用户" + username + "未注册");
+        if (record.getIsDelete() == 1) throw new CustomException("用户" + username + "已删除");
         password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
         if (!record.getPassword().equals(password))
             throw new CustomException("用户名或密码错误");
-        Map<String, Object> token = TokenUtil.createToken(record);
-        redisTemplate.opsForValue().set("token" , token.get("token"), Duration.ofMinutes(30));
-        redisTemplate.opsForValue().set("refresh" , "refresh"+token.get("token"), Duration.ofDays(7));
+        Map<String, Object> token = new HashMap<>(TokenUtil.createToken(record));
+        token.put("is_delete", record.getIsDelete());
+        token.put("permission", record.getPermission());
+        redisTemplate.opsForValue().set("token", token.get("token"), Duration.ofMinutes(30));
+        redisTemplate.opsForValue().set("refresh", "refresh" + token.get("token"), Duration.ofDays(7));
         return token;
     }
 
