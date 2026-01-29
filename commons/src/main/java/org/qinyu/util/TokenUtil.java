@@ -89,7 +89,7 @@ public class TokenUtil {
                 .subject(sub)
                 .issuedAt(convert2Date("0"))
                 .expiration(convert2Date(exp))
-                .signWith(Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)), Jwts.SIG.HS512)
+                .signWith(Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
 
@@ -128,6 +128,27 @@ public class TokenUtil {
             throw new CustomException("token 已过期...");
         } catch (SignatureException | MalformedJwtException e) {
             throw new CustomException("token 被篡改...");
+        }
+    }
+
+    /**
+     * 解析 token 并返回 Jws<Claims> 对象（关键修复：添加返回值）
+     *
+     * @param token token字符串
+     * @return 解析后的Jws<Claims>对象
+     */
+    public static Jws<Claims> parseToken2(String token) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(Keys.hmacShaKeyFor(key.getBytes(StandardCharsets.UTF_8)))
+                    .build()
+                    .parseSignedClaims(token);
+        } catch (ExpiredJwtException e) {
+            throw new CustomException("token 已过期...");
+        } catch (SignatureException | MalformedJwtException e) {
+            throw new CustomException("token 被篡改...");
+        } catch (JwtException e) { // 补充捕获其他JWT异常
+            throw new CustomException("token 解析失败: " + e.getMessage());
         }
     }
 }

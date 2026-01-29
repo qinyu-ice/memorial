@@ -7,6 +7,7 @@ import org.qinyu.model.property.MailProperty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -24,6 +25,7 @@ public class MailService {
     @Value(value = "${spring.data.redis.properties.timeout}")
     private Long timeout;
 
+    @Async
     public void sendAuthCode(String email, String code) {
         Context context = new Context(Locale.SIMPLIFIED_CHINESE, context(email, code));
         String text = engine.process(property.template(), context);

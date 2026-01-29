@@ -13,7 +13,7 @@ import org.qinyu.service.MailService;
 import org.qinyu.service.RedisService;
 import org.qinyu.service.UserService;
 import org.qinyu.util.JsonUtil;
-import org.qinyu.util.JwtUtil;
+import org.qinyu.util.TokenUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -169,8 +169,8 @@ public class SecurityConfig {
 
     private Result<Object> jwtResponse(Object principal, HttpServletResponse response) {
         UserModel userModel = (UserModel) principal;
-        Map<String, Object> payload = userModel.payload();
-        userModel.setJwt(JwtUtil.generate(payload));
+        Map<String, Object> record = userModel.record();
+        userModel.setToken(TokenUtil.createToken(Map.of("typ", "JWT"), record));
         return defaultResponse(HttpStatus.OK, null, userModel, response);
     }
 

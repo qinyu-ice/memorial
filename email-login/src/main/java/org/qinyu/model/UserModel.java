@@ -15,7 +15,7 @@ import java.util.*;
 @Entity(name = "user")
 @JsonIgnoreProperties(value = {
         "authorities", "accountNonExpired", "accountNonLocked",
-        "credentialsNonExpired", "enabled", "log", "username", "password"
+        "credentialsNonExpired", "enabled", "log", "emailPassword", "email"
 })
 public class UserModel implements UserDetails {
 
@@ -33,12 +33,12 @@ public class UserModel implements UserDetails {
     private String emailPassword;
 
     @Transient
-    private String jwt;
+    private String token;
 
     @NonNull
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(() -> "USER");
+        return Collections.emptyList();
     }
 
     @Override
@@ -60,8 +60,7 @@ public class UserModel implements UserDetails {
     public Map<String, Object> payload() {
         Class<? extends UserModel> clazz = this.getClass();
         List<String> ignoreProperties = Arrays.asList(clazz.getAnnotation(JsonIgnoreProperties.class).value());
-        Map<String, Object> payload = new HashMap<>(Map.of("authorities", getAuthorities()
-                .stream().map(GrantedAuthority::getAuthority).toList()));
+        Map<String, Object> payload = new HashMap<>();
         Arrays.stream(clazz.getDeclaredFields())
                 .forEach(field -> {
                     Transient aTransient = field.getAnnotation(Transient.class);
@@ -80,5 +79,12 @@ public class UserModel implements UserDetails {
                     }
                 });
         return payload;
+    }
+
+    public Map<String, Object> record() {
+        Map<String, Object> record = new HashMap<>();
+        record.put("id", id);
+        record.put("username", username);
+        return record;
     }
 }
