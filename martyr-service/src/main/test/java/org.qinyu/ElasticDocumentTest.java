@@ -25,7 +25,7 @@ import org.elasticsearch.client.RestClient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.qinyu.entity.table.Martyr;
+import org.qinyu.entity.Martyr;
 import org.qinyu.service.MartyrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -202,7 +202,7 @@ public class ElasticDocumentTest {
                 br.operations(op -> op
                         .index(idx -> idx
                                 .index("memorial")
-                                .id(String.valueOf(martyr.getMid()))
+                                .id(String.valueOf(martyr.getId()))
                                 .document(martyr)
                         )
                 );
