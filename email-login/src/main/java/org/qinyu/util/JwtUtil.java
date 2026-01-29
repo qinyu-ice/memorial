@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @Component
 public class JwtUtil {
     private static final Header HEADER = Jwts.header().type("JWT").build();
-    private static final Claims CLAIMS = Jwts.claims().issuer("tsubaki").build();
+    private static final Claims CLAIMS = Jwts.claims().issuer("qinyu").build();
     private static final Pattern PATTERN = Pattern.compile("(\\d+)[mhd]?");
 
     private static JwtProperty property;

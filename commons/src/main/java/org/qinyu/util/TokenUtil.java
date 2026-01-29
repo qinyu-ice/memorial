@@ -1,4 +1,4 @@
-package org.qinyu.tool;
+package org.qinyu.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

@@ -46,8 +46,8 @@ spring:
     password: 321520
   security:
     jjwt: # jwt 配置
-      secret: LjB6uPiYtZPETTkhEVkyp/uF9EhjfIs4956TXt8bias=
-      expiration: 1h # 支持的时间单位: m, h, d, 不加单位默认为秒
+      secret: 9Z8k7X6j5B4n3M2b1V0c9L8K7J6H5G4F3D2S1A0z9x8c7v6b5n4m3l2k1j0h9g8f7d6s5a4
+      expiration: 2h # 支持的时间单位: m, h, d, 不加单位默认为秒
   data:
     redis: # redis 配置
       url: redis://:321520@localhost:6379/0

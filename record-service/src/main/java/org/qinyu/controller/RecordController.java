@@ -1,7 +1,7 @@
 package org.qinyu.controller;
 
 import lombok.AllArgsConstructor;
-import org.qinyu.util.Result;
+import org.qinyu.tool.Result;
 import org.qinyu.dto.RecordDTO;
 import org.qinyu.entity.Record;
 import org.qinyu.vo.SimpleRecordVO;
@@ -29,5 +29,11 @@ public class RecordController {
             @PathVariable Integer page, @PathVariable Integer pageSize
     ) {
         return Result.ok("成功获取前" + pageSize + "条留言", recordService.findByPage(page, pageSize));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Result<Object> delete(@PathVariable Integer id) {
+        recordService.removeById(id);
+        return Result.ok("留言删除成功");
     }
 }

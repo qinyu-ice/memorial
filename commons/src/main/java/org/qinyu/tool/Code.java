@@ -1,4 +1,4 @@
-package org.qinyu.util;
+package org.qinyu.tool;
 
 import lombok.Getter;
 

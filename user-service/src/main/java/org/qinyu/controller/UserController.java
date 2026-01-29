@@ -1,7 +1,8 @@
 package org.qinyu.controller;
 
 import lombok.AllArgsConstructor;
-import org.qinyu.util.Result;
+import org.qinyu.dto.UserAddDTO;
+import org.qinyu.tool.Result;
 import org.qinyu.dto.UserLoginDTO;
 import org.qinyu.dto.UserRegisterDTO;
 import org.qinyu.dto.UserResetDTO;
@@ -41,5 +42,23 @@ public class UserController {
     public Result<SimpleUserVO> findSimpleById(@PathVariable Integer id) {
         User user = userService.getById(id);
         return Result.ok("成功获取uid为" + id + "的简要用户信息", new SimpleUserVO(user));
+    }
+
+    @PostMapping(value = "/add")
+    public Result<Object> add(UserAddDTO dto) {
+        userService.add(dto);
+        return Result.ok("用户" + dto.getUsername() + "新增成功");
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public Result<Object> delete(@PathVariable Integer id) {
+        userService.removeById(id);
+        return Result.ok("用户" + id + "删除成功");
+    }
+
+    @PostMapping(value = "/update")
+    public Result<Object> update(@RequestBody User user) {
+        userService.updateById(user);
+        return Result.ok("用户" + user.getUsername() + "更新成功");
     }
 }

@@ -1,11 +1,12 @@
 package org.qinyu.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.qinyu.dto.UserAddDTO;
 import org.qinyu.entity.User;
 import org.qinyu.expcetion.CustomException;
 import org.qinyu.mapper.UserMapper;
 import org.qinyu.service.UserService;
-import org.qinyu.tool.TokenUtil;
+import org.qinyu.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
         if (!save(new User(null, username, password, null, null, null, null, null)))
             throw new CustomException("用户注册失败");
-
     }
 
     @Override
@@ -44,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Map<String, Object> token = new HashMap<>(TokenUtil.createToken(record));
         token.put("is_delete", record.getIsDelete());
         token.put("permission", record.getPermission());
-        redisTemplate.opsForValue().set("token", token.get("token"), Duration.ofMinutes(30));
+        redisTemplate.opsForValue().set("token", token.get("token"), Duration.ofHours(2));
         redisTemplate.opsForValue().set("refresh", "refresh" + token.get("token"), Duration.ofDays(7));
         return token;
     }
@@ -60,5 +60,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         password2 = DigestUtils.md5DigestAsHex(password2.getBytes(StandardCharsets.UTF_8));
         if (!lambdaUpdate().eq(User::getUsername, username).set(User::getPassword, password2).update())
             throw new CustomException("重置用户密码失败");
+    }
+
+    @Override
+    public void add(UserAddDTO dto){
+        User record = lambdaQuery().eq(User::getUsername, dto.getUsername()).one();
+        if (record != null) throw new CustomException("用户名" + dto.getUsername() + "已被占用");
+        String password = DigestUtils.md5DigestAsHex(dto.getPassword().getBytes(StandardCharsets.UTF_8));
+        if (!save(new User(null, dto.getUsername(), password, dto.getRealName(), dto.getEmail(), dto.getPhone(), null, null)))
+            throw new CustomException("用户新增失败");
     }
 }

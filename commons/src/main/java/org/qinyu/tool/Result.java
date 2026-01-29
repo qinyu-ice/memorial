@@ -1,4 +1,4 @@
-package org.qinyu.util;
+package org.qinyu.tool;
 
 public record Result<T>(Integer code, String msg, T data) {
 

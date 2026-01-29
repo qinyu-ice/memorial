@@ -1,7 +1,7 @@
 package org.qinyu.expcetion;
 
 import lombok.extern.slf4j.Slf4j;
-import org.qinyu.util.Result;
+import org.qinyu.tool.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

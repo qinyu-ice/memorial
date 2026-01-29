@@ -2,10 +2,10 @@ package org.qinyu.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.qinyu.util.Result;
+import org.qinyu.tool.Result;
 import org.qinyu.expcetion.CustomException;
-import org.qinyu.tool.JsonUtil;
-import org.qinyu.tool.TokenUtil;
+import org.qinyu.util.JsonUtil;
+import org.qinyu.util.TokenUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 public class TokenInterceptor implements HandlerInterceptor {

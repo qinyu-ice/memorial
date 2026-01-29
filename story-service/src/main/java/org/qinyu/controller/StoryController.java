@@ -2,15 +2,12 @@ package org.qinyu.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
-import org.qinyu.util.Result;
+import org.qinyu.tool.Result;
 import org.qinyu.entity.Story;
 import org.qinyu.vo.PageVO;
 import org.qinyu.vo.SimpleStoryVO;
 import org.qinyu.service.StoryService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/story", produces = "application/json; charset=utf-8")
@@ -33,5 +30,23 @@ public class StoryController {
                 .page(Page.of(page, pageSize));
         return Result.ok("成功获取第" + page + "页简要寻亲故事信息", new PageVO<>(paged.getTotal(),
                 paged.getRecords().stream().map(SimpleStoryVO::new).toList()));
+    }
+
+    @PostMapping(value = "/add")
+    public Result<Story> add(@RequestBody Story story) {
+        storyService.save(story);
+        return Result.ok("寻亲故事新增成功");
+    }
+
+    @PostMapping(value = "/update")
+    public Result<Story> update(@RequestBody Story story) {
+        storyService.updateById(story);
+        return Result.ok("寻亲故事更新成功");
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Result<Story> delete(@PathVariable Integer id) {
+        storyService.removeById(id);
+        return Result.ok("寻亲故事删除成功");
     }
 }
