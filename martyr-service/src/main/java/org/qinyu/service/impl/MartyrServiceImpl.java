@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MartyrServiceImpl extends ServiceImpl<MartyrMapper, Martyr> implements MartyrService {
@@ -32,7 +33,7 @@ public class MartyrServiceImpl extends ServiceImpl<MartyrMapper, Martyr> impleme
         //1.连接Elasticsearch 搜索引擎
         ElasticsearchClient client;
         // URL和API密钥
-        String serverUrl = "http://192.168.153.160:9200";
+        String serverUrl = "http://localhost:9200";
 
         // 创建低级别客户端
         RestClient restClient = RestClient
@@ -51,12 +52,12 @@ public class MartyrServiceImpl extends ServiceImpl<MartyrMapper, Martyr> impleme
         SearchRequest.Builder searchBuilder = new SearchRequest.Builder();
         searchBuilder.index("memorial");
         if ((martyrDTO.getPosition() == null && martyrDTO.getDept() == null
-                && martyrDTO.getDeathCampaign() == null && martyrDTO.getDeeds() == null) || (martyrDTO.getPosition() == "" && martyrDTO.getDept() == ""
-                && martyrDTO.getDeathCampaign() == "" && martyrDTO.getDeeds() == "")) {
+                && martyrDTO.getDeathCampaign() == null && martyrDTO.getDeeds() == null) || (Objects.equals(martyrDTO.getPosition(), "") && Objects.equals(martyrDTO.getDept(), "")
+                && Objects.equals(martyrDTO.getDeathCampaign(), "") && Objects.equals(martyrDTO.getDeeds(), ""))) {
             searchBuilder.query(Query.of(q->q.matchAll(t->t)));
         }else{
             BoolQuery.Builder boolQueryBuilder = new BoolQuery.Builder();
-            if (martyrDTO.getDeeds() != null && martyrDTO.getDeeds() != "") {
+            if (martyrDTO.getDeeds() != null && !martyrDTO.getDeeds().isEmpty()) {
                 Query searchQuery = Query.of(q -> q
                         .match(m -> m.field("deeds")
                                 .query(martyrDTO.getDeeds()))
@@ -64,7 +65,7 @@ public class MartyrServiceImpl extends ServiceImpl<MartyrMapper, Martyr> impleme
                 boolQueryBuilder.should(searchQuery);
             }
 
-            if (martyrDTO.getDept() != null && martyrDTO.getDept() != "") {
+            if (martyrDTO.getDept() != null && !martyrDTO.getDept().isEmpty()) {
                 Query query = Query.of(q -> q
                         .match(
                                 m -> m.field("dept")
@@ -73,7 +74,7 @@ public class MartyrServiceImpl extends ServiceImpl<MartyrMapper, Martyr> impleme
                 boolQueryBuilder.should(query);
             }
 
-            if (martyrDTO.getDeathCampaign() != null && martyrDTO.getDeathCampaign() != "") {
+            if (martyrDTO.getDeathCampaign() != null && !martyrDTO.getDeathCampaign().isEmpty()) {
                 Query query = Query.of(q -> q
                         .match(m -> m.field("deathCampaign")
                                 .query(martyrDTO.getDeathCampaign()))
@@ -81,7 +82,7 @@ public class MartyrServiceImpl extends ServiceImpl<MartyrMapper, Martyr> impleme
                 boolQueryBuilder.should(query);
             }
 
-            if (martyrDTO.getPosition() != null && martyrDTO.getPosition() != "") {
+            if (martyrDTO.getPosition() != null && !martyrDTO.getPosition().isEmpty()) {
                 Query query = Query.of(q -> q
                         .term(t -> t.field("position")
                                 .value(martyrDTO.getPosition())

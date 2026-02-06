@@ -54,7 +54,7 @@ public class ElasticDocumentTest {
     void setUp() {
 
         // URL和API密钥
-        String serverUrl = "http://192.168.153.157:9200";
+        String serverUrl = "http://localhost:9200";
 
         // 创建低级别客户端
         RestClient restClient = RestClient
