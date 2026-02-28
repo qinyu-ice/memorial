@@ -2,7 +2,7 @@
 server:
   servlet:
     context-path: / # 为了便于开发此处省略应用程序上下文
-  port: 8710 # 为了便于开发此处使用 http 默认端口
+  port: 8701 # 为了便于开发此处使用 http 默认端口
 
 # Token相关配置（与代码中@Value的key一一对应）
 token:

@@ -1,16 +1,14 @@
 package org.qinyu.controller;
 
 import lombok.AllArgsConstructor;
-import org.qinyu.dto.UserAddDTO;
+import org.qinyu.dto.*;
 import org.qinyu.tool.Result;
-import org.qinyu.dto.UserLoginDTO;
-import org.qinyu.dto.UserRegisterDTO;
-import org.qinyu.dto.UserResetDTO;
 import org.qinyu.entity.User;
 import org.qinyu.vo.SimpleUserVO;
 import org.qinyu.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,7 +20,7 @@ public class UserController {
 
     @PostMapping(value = "/register")
     public Result<Object> register(@RequestBody UserRegisterDTO dto) {
-        userService.register(dto.getUsername(), dto.getPassword(), dto.getPassword2());
+        userService.register(dto.getUsername(), dto.getPassword(), dto.getPassword2(),dto.getEmail());
         return Result.ok("用户" + dto.getUsername() + "注册成功");
     }
 
@@ -38,6 +36,12 @@ public class UserController {
         return Result.ok("用户" + dto.getUsername() + "重置密码成功");
     }
 
+    @GetMapping(value = "/all")
+    public Result<List<UserDTO>> getAll() {
+        List<UserDTO> userDTOList = userService.getAll();
+        return Result.ok("成功获取所有用户", userDTOList);
+    }
+
     @GetMapping(value = "/simple/{id}")
     public Result<SimpleUserVO> findSimpleById(@PathVariable Integer id) {
         User user = userService.getById(id);
@@ -45,20 +49,20 @@ public class UserController {
     }
 
     @PostMapping(value = "/add")
-    public Result<Object> add(UserAddDTO dto) {
+    public Result<Object> add(@RequestBody UserAddDTO dto) {
         userService.add(dto);
         return Result.ok("用户" + dto.getUsername() + "新增成功");
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public Result<Object> delete(@PathVariable Integer id) {
-        userService.removeById(id);
+        userService.deleteById(id);
         return Result.ok("用户" + id + "删除成功");
     }
 
     @PostMapping(value = "/update")
-    public Result<Object> update(@RequestBody User user) {
-        userService.updateById(user);
-        return Result.ok("用户" + user.getUsername() + "更新成功");
+    public Result<Object> update(@RequestBody UserUpdateDTO dto) {
+        userService.update(dto);
+        return Result.ok("用户" + dto.getId() + "更新成功");
     }
 }

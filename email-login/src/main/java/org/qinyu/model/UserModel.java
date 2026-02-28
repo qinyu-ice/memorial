@@ -32,6 +32,15 @@ public class UserModel implements UserDetails {
     @Column(nullable = false, length = 64)
     private String emailPassword;
 
+    @Column(nullable = false, length = 64)
+    private String realName;
+
+    @Column(nullable = false, length = 64)
+    private String phone;
+
+    @Column(nullable = false, length = 32)
+    private Integer permission;
+
     @Transient
     private String token;
 
@@ -85,6 +94,9 @@ public class UserModel implements UserDetails {
         Map<String, Object> record = new HashMap<>();
         record.put("id", id);
         record.put("username", username);
+        record.put("realName", realName);
+        record.put("phone", phone);
+        record.put("permission", permission);
         return record;
     }
 }

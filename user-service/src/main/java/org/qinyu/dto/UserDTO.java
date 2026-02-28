@@ -3,7 +3,9 @@ package org.qinyu.dto;
 import lombok.Data;
 
 @Data
-public class UserAddDTO {
+public class UserDTO {
+
+    private Integer id;
 
     private String realName;
 
@@ -12,4 +14,8 @@ public class UserAddDTO {
     private String email;
 
     private String phone;
+
+    private Integer permission;
+
+    private Integer isDelete;
 }
