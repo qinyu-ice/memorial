@@ -1,8 +1,12 @@
 package org.qinyu.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class Place {
@@ -21,4 +25,12 @@ public class Place {
     private String address;
 
     private String hint;
+
+    // 插入时自动填充
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    // 插入和更新时自动填充
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 }

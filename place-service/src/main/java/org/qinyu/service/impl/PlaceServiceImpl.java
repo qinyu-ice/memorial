@@ -12,12 +12,17 @@ import org.qinyu.entity.Place;
 import org.qinyu.vo.AddressVO;
 import org.qinyu.mapper.PlaceMapper;
 import org.qinyu.service.PlaceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
 public class PlaceServiceImpl extends ServiceImpl<PlaceMapper, Place> implements PlaceService {
+
+    @Autowired
+    private PlaceMapper placeMapper;
+
     @Override
     public String getAddressByIp(String ip) throws IOException {
         String key="43b4c8b855538aa8afb4f7a4e2f0be60";
@@ -34,5 +39,11 @@ public class PlaceServiceImpl extends ServiceImpl<PlaceMapper, Place> implements
         String body = EntityUtils.toString(entity);
         AddressVO addressVO = JSON.parseObject(body, AddressVO.class);
         return addressVO.getRectangle().split(";")[0];
+    }
+
+    @Override
+    public boolean updateById(Place place) {
+        placeMapper.update(place);
+        return true;
     }
 }

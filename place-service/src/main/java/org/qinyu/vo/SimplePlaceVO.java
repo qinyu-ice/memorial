@@ -3,6 +3,8 @@ package org.qinyu.vo;
 import lombok.Data;
 import org.qinyu.entity.Place;
 
+import java.time.LocalDateTime;
+
 @Data
 public class SimplePlaceVO {
 
@@ -12,9 +14,27 @@ public class SimplePlaceVO {
 
     private String img;
 
+    private String introduction;
+
+    private String phone;
+
+    private String address;
+
+    private String hint;
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
+
     public SimplePlaceVO(Place place) {
         this.id = place.getId();
         this.name = place.getName();
-        this.img = "https://www.sctyjrsw.com/image" + place.getImg();
+        this.img = "https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com" + place.getImg();
+        this.introduction = place.getIntroduction();
+        this.phone = place.getPhone();
+        this.address = place.getAddress();
+        this.hint = place.getHint();
+        this.createTime = place.getCreateTime();
+        this.updateTime = place.getUpdateTime();
     }
 }

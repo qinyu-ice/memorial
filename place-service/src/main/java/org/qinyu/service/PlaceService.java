@@ -7,4 +7,6 @@ import java.io.IOException;
 
 public interface PlaceService extends IService<Place> {
     String getAddressByIp(String ip) throws IOException;
+
+    boolean updateById(Place place);
 }
