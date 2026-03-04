@@ -25,6 +25,7 @@ import java.util.UUID;
 public class PlaceController {
 
     private final PlaceService placeService;
+
     private AliOssUtil aliOssUtil;
 
     @GetMapping
@@ -36,7 +37,7 @@ public class PlaceController {
     @GetMapping(value = "/{id}")
     public Result<Place> findById(@PathVariable Integer id) {
         Place place = placeService.getById(id);
-        place.setImg("https://www.sctyjrsw.com/image" + place.getImg());
+        place.setImg("https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com" + place.getImg());
         return Result.ok("成功获取id为" + id + "的悼念地点信息", place);
     }
 

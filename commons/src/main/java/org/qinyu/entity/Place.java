@@ -30,7 +30,7 @@ public class Place {
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    // 插入和更新时自动填充
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+    // 插入时自动填充
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime updateTime;
 }

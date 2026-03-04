@@ -18,6 +18,7 @@ import org.qinyu.vo.PageVO;
 import org.qinyu.vo.SimpleSmartMartyrVO;
 import org.qinyu.mapper.MartyrMapper;
 import org.qinyu.service.MartyrService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -27,6 +28,10 @@ import java.util.Objects;
 
 @Service
 public class MartyrServiceImpl extends ServiceImpl<MartyrMapper, Martyr> implements MartyrService {
+
+    @Autowired
+    private MartyrMapper martyrMapper;
+
     @Override
     public PageVO<SimpleSmartMartyrVO> smartSearch(MartyrDTO martyrDTO, Integer page, Integer pageSize) throws IOException {
         //TODO 封装为config类
@@ -99,6 +104,11 @@ public class MartyrServiceImpl extends ServiceImpl<MartyrMapper, Martyr> impleme
         SearchResponse<Martyr> response = client.search(searchRequest, Martyr.class);
 
         return parseMartyrResponse(response, page, pageSize);
+    }
+
+    @Override
+    public void updateMartyrById(Martyr martyr) {
+        martyrMapper.updateMartyrById(martyr);
     }
 
     //TODO 返回评判百分数

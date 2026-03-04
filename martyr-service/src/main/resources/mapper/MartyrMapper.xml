@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.qinyu.mapper.MartyrMapper">
+
+    <update id="updateMartyrById" parameterType="org.qinyu.entity.Martyr">
+        UPDATE martyr
+        SET photo           = #{photo},
+            name            = #{name},
+            hometown        = #{hometown},
+            gender          = #{gender},
+            politics_status = #{politicsStatus},
+            birth_date      = #{birthDate},
+            dept            = #{dept},
+            position        = #{position},
+            achievement     = #{achievement},
+            death_date      = #{deathDate},
+            death_campaign  = #{deathCampaign},
+            death_address   = #{deathAddress},
+            bury_point      = #{buryPoint},
+            deeds           = #{deeds},
+            update_time     = now()
+        WHERE id = #{id}
+    </update>
+</mapper>

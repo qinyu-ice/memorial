@@ -6,4 +6,6 @@ import org.qinyu.entity.Martyr;
 
 @Mapper
 public interface MartyrMapper extends BaseMapper<Martyr> {
+
+    void updateMartyrById(Martyr martyr);
 }

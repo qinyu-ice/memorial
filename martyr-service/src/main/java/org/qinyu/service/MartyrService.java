@@ -10,4 +10,6 @@ import java.io.IOException;
 
 public interface MartyrService extends IService<Martyr> {
     PageVO<SimpleSmartMartyrVO> smartSearch(MartyrDTO martyrDTO, Integer page, Integer pageSize) throws IOException;
+
+    void updateMartyrById(Martyr martyr);
 }

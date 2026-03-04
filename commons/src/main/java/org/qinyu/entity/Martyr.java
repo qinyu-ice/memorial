@@ -1,8 +1,12 @@
 package org.qinyu.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class Martyr {
@@ -20,6 +24,8 @@ public class Martyr {
 
     private String politicsStatus;
 
+    private String birthDate;
+
     private String dept;
 
     private String position;
@@ -35,4 +41,12 @@ public class Martyr {
     private String buryPoint;
 
     private String deeds;
+
+    // 插入时自动填充
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    // 插入时自动填充
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime updateTime;
 }
