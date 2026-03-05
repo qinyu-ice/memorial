@@ -21,7 +21,7 @@ public class StoryController {
 
     @GetMapping(value = "/{id}")
     public Result<Story> findById(@PathVariable Integer id) {
-        return Result.ok("成功获取id为" + id + "的寻亲故事信息", storyService.getById(id));
+        return Result.ok("成功获取id为" + id + "的寻亲故事", storyService.getById(id));
     }
 
     @GetMapping(value = "/{page}/{pageSize}")
@@ -31,7 +31,7 @@ public class StoryController {
         Page<Story> paged = storyService.lambdaQuery()
                 .orderByDesc(Story::getTime)
                 .page(Page.of(page, pageSize));
-        return Result.ok("成功获取第" + page + "页简要寻亲故事信息", new PageVO<>(paged.getTotal(),
+        return Result.ok("成功获取第" + page + "页简要寻亲故事", new PageVO<>(paged.getTotal(),
                 paged.getRecords().stream().map(SimpleStoryVO::new).toList()));
     }
 
@@ -43,7 +43,10 @@ public class StoryController {
         Page<Story> paged = storyService.lambdaQuery()
                 .like(!title.isEmpty(), Story::getTitle, title)
                 .page(Page.of(page, pageSize));
-        return Result.ok("成功获取第" + page + "页寻亲故事信息", new PageVO<>(paged.getTotal(),
+        if (paged.getRecords().isEmpty()) {
+            return Result.no("暂无相关寻亲故事");
+        }
+        return Result.ok("成功获取第" + page + "页寻亲故事", new PageVO<>(paged.getTotal(),
                 paged.getRecords()));
     }
 

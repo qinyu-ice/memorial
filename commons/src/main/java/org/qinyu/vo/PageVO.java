@@ -12,4 +12,8 @@ public class PageVO<T> {
     private Long total;
 
     private List<T> data;
+
+    public PageVO() {
+
+    }
 }

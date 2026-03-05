@@ -29,12 +29,4 @@ public class Record {
     private String message;
 
     private LocalDateTime time;
-
-    // 插入时自动填充
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-
-    // 插入时自动填充
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime updateTime;
 }

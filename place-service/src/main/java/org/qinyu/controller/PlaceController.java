@@ -10,13 +10,11 @@ import org.qinyu.util.AliOssUtil;
 import org.qinyu.vo.PageVO;
 import org.qinyu.vo.SimplePlaceVO;
 import org.qinyu.service.PlaceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/place", produces = "application/json; charset=utf-8")
@@ -30,7 +28,7 @@ public class PlaceController {
 
     @GetMapping
     public Result<List<SimplePlaceVO>> findAll() {
-        return Result.ok("成功获取所有悼念地点信息",
+        return Result.ok("成功获取所有烈士纪念设施",
                 placeService.list().stream().map(SimplePlaceVO::new).toList());
     }
 
@@ -38,13 +36,13 @@ public class PlaceController {
     public Result<Place> findById(@PathVariable Integer id) {
         Place place = placeService.getById(id);
         place.setImg("https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com" + place.getImg());
-        return Result.ok("成功获取id为" + id + "的悼念地点信息", place);
+        return Result.ok("成功获取id为" + id + "的烈士纪念设施", place);
     }
 
     @GetMapping(value = "/ip")
     public Result<String> findByIP(String ip) throws IOException {
         String address = placeService.getAddressByIp(ip);
-        return Result.ok("成功获取地址信息" + address, address);
+        return Result.ok("成功获取烈士纪念设施" + address, address);
     }
 
     @GetMapping(value = "/{page}/{pageSize}")
@@ -63,26 +61,29 @@ public class PlaceController {
         }
 
         Page<Place> paged = placeService.page(pageParam, queryWrapper);
-        return Result.ok("成功获取第" + page + "页悼念地点信息", new PageVO<>(paged.getTotal(),
+        if(paged.getRecords().isEmpty()){
+            return Result.no("暂无相关烈士纪念设施");
+        }
+        return Result.ok("成功获取第" + page + "页烈士纪念设施", new PageVO<>(paged.getTotal(),
                 paged.getRecords().stream().map(SimplePlaceVO::new).toList()));
     }
 
     @PostMapping("/add")
     public Result<Object> add(@RequestBody Place place) {
         placeService.save(place);
-        return Result.ok("悼念地点新增成功");
+        return Result.ok("烈士纪念设施新增成功");
     }
 
     @PostMapping("/update")
     public Result<Object> update(@RequestBody Place place) {
         placeService.updateById(place);
-        return Result.ok("悼念地点" + place.getName() + "更新成功");
+        return Result.ok("烈士纪念设施" + place.getName() + "更新成功");
     }
 
     @DeleteMapping("/delete/{id}")
     public Result<Object> delete(@PathVariable Integer id) {
         placeService.removeById(id);
-        return Result.ok("悼念地点删除成功");
+        return Result.ok("烈士纪念设施删除成功");
     }
 
     @PostMapping("/upload")

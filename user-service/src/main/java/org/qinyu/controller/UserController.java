@@ -1,13 +1,17 @@
 package org.qinyu.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.qinyu.dto.*;
 import org.qinyu.tool.Result;
 import org.qinyu.entity.User;
+import org.qinyu.vo.PageVO;
 import org.qinyu.vo.SimpleUserVO;
 import org.qinyu.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +24,7 @@ public class UserController {
 
     @PostMapping(value = "/register")
     public Result<Object> register(@RequestBody UserRegisterDTO dto) {
-        userService.register(dto.getUsername(), dto.getPassword(), dto.getPassword2(),dto.getEmail());
+        userService.register(dto.getUsername(), dto.getPassword(), dto.getPassword2(), dto.getEmail());
         return Result.ok("用户" + dto.getUsername() + "注册成功");
     }
 
@@ -36,16 +40,39 @@ public class UserController {
         return Result.ok("用户" + dto.getUsername() + "重置密码成功");
     }
 
-    @GetMapping(value = "/all")
-    public Result<List<UserDTO>> getAll() {
-        List<UserDTO> userDTOList = userService.getAll();
-        return Result.ok("成功获取所有用户", userDTOList);
+    @GetMapping(value = "/{page}/{pageSize}")
+    public Result<PageVO<UserDTO>> getUserByPage(
+            @PathVariable Integer page, @PathVariable Integer pageSize,
+            @RequestParam(required = false, defaultValue = "") String username
+    ) {
+        Page<User> paged = userService.lambdaQuery()
+                .like(User::getPermission, 2)
+                .like(!username.isEmpty(), User::getUsername, username)
+                .page(Page.of(page, pageSize));
+        if (paged.getRecords().isEmpty()) {
+            return Result.no("暂无相关用户");
+        }
+        List<UserDTO> userDTOList = new ArrayList<>();
+        paged.getRecords().forEach(user -> {
+            UserDTO userDTO = new UserDTO();
+            BeanUtils.copyProperties(user, userDTO);
+            userDTOList.add(userDTO);
+        });
+        return Result.ok("成功获取所有用户", new PageVO<>(paged.getTotal(), userDTOList));
     }
 
     @GetMapping(value = "/simple/{id}")
     public Result<SimpleUserVO> findSimpleById(@PathVariable Integer id) {
         User user = userService.getById(id);
-        return Result.ok("成功获取uid为" + id + "的简要用户信息", new SimpleUserVO(user));
+        return Result.ok("成功获取id为" + id + "的简要用户信息", new SimpleUserVO(user));
+    }
+
+    @GetMapping(value = "/simple2/{username}")
+    public Result<SimpleUserVO> findSimpleByUsername(@PathVariable String username) {
+        if (username == null || username.trim().isEmpty()) {
+            return Result.no("用户名不能为空");
+        }
+        return Result.ok("成功获取用户名为" + username + "的简要用户信息", userService.getByUsername(username));
     }
 
     @PostMapping(value = "/add")

@@ -11,4 +11,7 @@ public interface UserClient {
 
     @GetExchange(value = "/simple/{id}")
     Result<SimpleUserVO> findSimpleById(@PathVariable Integer id);
+
+    @GetExchange(value = "/simple2/{username}")
+    Result<SimpleUserVO> findSimpleByUsername(@PathVariable String username);
 }

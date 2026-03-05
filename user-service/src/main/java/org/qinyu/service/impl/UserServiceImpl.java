@@ -2,13 +2,13 @@ package org.qinyu.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.qinyu.dto.UserAddDTO;
-import org.qinyu.dto.UserDTO;
 import org.qinyu.dto.UserUpdateDTO;
 import org.qinyu.entity.User;
 import org.qinyu.expcetion.CustomException;
 import org.qinyu.mapper.UserMapper;
 import org.qinyu.service.UserService;
 import org.qinyu.util.TokenUtil;
+import org.qinyu.vo.SimpleUserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -86,15 +86,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public List<UserDTO> getAll() {
-        List<UserDTO> userDTOList = userMapper.getAll();
-        if (userDTOList.isEmpty()) {
-            throw new CustomException("暂无用户");
-        }
-        return userDTOList;
-    }
-
-    @Override
     public void add(UserAddDTO dto) {
         User record = lambdaQuery().eq(User::getUsername, dto.getUsername()).one();
         if (record != null) throw new CustomException("用户名" + dto.getUsername() + "已被占用");
@@ -119,5 +110,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             dto.setEmailPassword(encoder.encode(dto.getEmailPassword()));
         }
         userMapper.updateById(dto);
+    }
+
+    @Override
+    public SimpleUserVO getByUsername(String username) {
+        return userMapper.getByUsername(username);
     }
 }

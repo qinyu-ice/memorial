@@ -30,7 +30,7 @@ public class MartyrController {
         if (martyr.getPhoto().contains("https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com")) {
             martyr.setPhoto("https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com" + martyr.getPhoto());
         } else {
-            martyr.setPhoto("https://www.sctyjrsw.com/image" + martyr.getPhoto());
+            martyr.setPhoto("https://www.sctyjrsw.com" + martyr.getPhoto());
         }
         return Result.ok("成功获取" + martyr.getName() + "烈士的信息", martyr);
     }
@@ -66,7 +66,10 @@ public class MartyrController {
                 }
             }
         });
-        return Result.ok("成功获取第" + page + "页烈士名称", new PageVO<>(paged.getTotal(),
+        if(paged.getRecords().isEmpty()){
+            return Result.no("暂无相关烈士信息");
+        }
+        return Result.ok("成功获取第" + page + "页烈士信息", new PageVO<>(paged.getTotal(),
                 paged.getRecords()));
     }
 
