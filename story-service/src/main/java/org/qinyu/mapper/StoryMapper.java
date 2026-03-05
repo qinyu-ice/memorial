@@ -6,4 +6,6 @@ import org.qinyu.entity.Story;
 
 @Mapper
 public interface StoryMapper extends BaseMapper<Story> {
+
+    void updateStoryById(Story story);
 }

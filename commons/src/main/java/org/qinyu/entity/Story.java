@@ -1,6 +1,8 @@
 package org.qinyu.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +25,12 @@ public class Story {
     private String content;
 
     private LocalDateTime time;
+
+    // 插入时自动填充
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    // 插入时自动填充
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime updateTime;
 }
