@@ -18,6 +18,10 @@ public class Place {
 
     private String img;
 
+    private String longitude;
+
+    private String latitude;
+
     private String introduction;
 
     private String phone;

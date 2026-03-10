@@ -14,6 +14,10 @@ public class SimplePlaceVO {
 
     private String img;
 
+    private String longitude;
+
+    private String latitude;
+
     private String introduction;
 
     private String phone;
@@ -30,6 +34,8 @@ public class SimplePlaceVO {
         this.id = place.getId();
         this.name = place.getName();
         this.img = "https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com" + place.getImg();
+        this.longitude = place.getLongitude();
+        this.latitude = place.getLatitude();
         this.introduction = place.getIntroduction();
         this.phone = place.getPhone();
         this.address = place.getAddress();

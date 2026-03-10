@@ -6,6 +6,8 @@
         UPDATE place
         SET name         = #{name},
             img          = #{img},
+            longitude    = #{longitude},
+            latitude     = #{latitude},
             introduction = #{introduction},
             phone        = #{phone},
             address      = #{address},
