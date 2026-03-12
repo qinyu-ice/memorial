@@ -2,7 +2,7 @@
 server:
   servlet:
     context-path: / # 为了便于开发此处省略应用程序上下文
-  port: 8501 # 为了便于开发此处使用 http 默认端口
+  port: 8901 # 为了便于开发此处使用 http 默认端口
 
 # spring 相关配置
 spring:

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.qinyu.dto.UserResetAdminDTO;
 import org.qinyu.dto.UserUpdateDTO;
 import org.qinyu.entity.User;
 import org.qinyu.vo.SimpleUserVO;
@@ -16,6 +17,8 @@ public interface UserMapper extends BaseMapper<User> {
     void deleteById(@Param("id") Integer id);
 
     void updateById(UserUpdateDTO dto);
+
+    boolean resetAdmin(UserResetAdminDTO dto);
 
     @Select("select id, username from user where username = #{username}")
     SimpleUserVO getByUsername(String username);

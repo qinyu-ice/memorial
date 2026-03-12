@@ -21,7 +21,7 @@
 
 # 服务器配置
 server:
-  port: 8801
+  port: 8501
 
 # spring 配置
 spring:

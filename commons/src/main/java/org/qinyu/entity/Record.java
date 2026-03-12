@@ -22,8 +22,6 @@ public class Record {
 
     private Integer martyrId;
 
-    private Integer ignite;
-
     private Integer flower;
 
     private String message;

@@ -7,30 +7,46 @@
         SET
         <!-- 使用 trim 标签处理多余的逗号：prefixOverrides 去掉开头的逗号，suffixOverrides 去掉结尾的逗号 -->
         <trim prefix="" suffix="" suffixOverrides=",">
-            <if test="realName != null">
+            <if test="realName != null and realName != ''">
                 real_name = #{realName},
             </if>
-            <if test="username != null">
+            <if test="username != null and username != ''">
                 username = #{username},
             </if>
-            <if test="password != null">
+            <if test="password != null and password != ''">
                 password = #{password},
             </if>
-            <if test="email != null">
+            <if test="email != null and email != ''">
                 email = #{email},
             </if>
-            <if test="emailPassword != null">
+            <if test="emailPassword != null and emailPassword != ''">
                 email_password = #{emailPassword},
             </if>
-            <if test="phone != null">
+            <if test="phone != null and phone != ''">
                 phone = #{phone},
             </if>
-            <if test="permission != null">
+            <if test="permission != null and permission != ''">
                 permission = #{permission},
             </if>
-                update_time = now()
+            update_time = now()
         </trim>
         WHERE id = #{id}
+    </update>
+
+    <update id="resetAdmin" parameterType="org.qinyu.dto.UserResetAdminDTO">
+        UPDATE user
+        SET
+        <!-- 使用 trim 标签处理多余的逗号：prefixOverrides 去掉开头的逗号，suffixOverrides 去掉结尾的逗号 -->
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="newPassword != null and newPassword != ''">
+                password = #{newPassword},
+            </if>
+            <if test="newEmailPassword != null and newEmailPassword != ''">
+                email_password = #{newEmailPassword},
+            </if>
+            update_time = now()
+        </trim>
+        WHERE username = #{username}
     </update>
 
 </mapper>

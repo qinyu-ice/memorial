@@ -15,8 +15,6 @@ public class SimpleRecordVO {
 
     private String martyrName;
 
-    private Integer ignite;
-
     private Integer flower;
 
     private String message;

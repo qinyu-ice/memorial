@@ -36,7 +36,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
         paged.getRecords().forEach(record -> {
             String username = userClient.findSimpleById(record.getUserId()).data().getUsername();
             String name = martyrClient.findSimpleById(record.getMartyrId()).data().getName();
-            SimpleRecordVO simpleRecordVO = new SimpleRecordVO(record.getId(), username, name, record.getIgnite(), record.getFlower(), record.getMessage(), record.getTime()
+            SimpleRecordVO simpleRecordVO = new SimpleRecordVO(record.getId(), username, name, record.getFlower(), record.getMessage(), record.getTime()
             );
             simpleRecordVOList.add(simpleRecordVO);
         });
@@ -54,7 +54,6 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
             simpleRecordVO.setId(record.getId());
             simpleRecordVO.setUsername(username);
             simpleRecordVO.setMartyrName(martyrName);
-            simpleRecordVO.setIgnite(record.getIgnite());
             simpleRecordVO.setFlower(record.getFlower());
             simpleRecordVO.setMessage(record.getMessage());
             simpleRecordVO.setTime(record.getTime());

@@ -15,6 +15,8 @@ public interface UserService extends IService<User> {
 
     void reset(String username, String password, String password2);
 
+    void resetAdmin(String username, String newPassword,String newEmailPassword);
+
     void add(UserAddDTO dto);
 
     void deleteById(Integer id);

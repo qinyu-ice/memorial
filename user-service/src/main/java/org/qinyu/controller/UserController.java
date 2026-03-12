@@ -40,6 +40,12 @@ public class UserController {
         return Result.ok("用户" + dto.getUsername() + "重置密码成功");
     }
 
+    @PutMapping(value = "/resetAdmin")
+    public Result<Object> resetAdmin(@RequestBody UserResetAdminDTO dto) {
+        userService.resetAdmin(dto.getUsername(), dto.getNewPassword(),dto.getNewEmailPassword());
+        return Result.ok("用户" + dto.getUsername() + "重置密码成功");
+    }
+
     @GetMapping(value = "/{page}/{pageSize}")
     public Result<PageVO<UserDTO>> getUserByPage(
             @PathVariable Integer page, @PathVariable Integer pageSize,

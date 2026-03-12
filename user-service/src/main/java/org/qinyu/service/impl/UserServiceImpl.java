@@ -2,6 +2,7 @@ package org.qinyu.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.qinyu.dto.UserAddDTO;
+import org.qinyu.dto.UserResetAdminDTO;
 import org.qinyu.dto.UserUpdateDTO;
 import org.qinyu.entity.User;
 import org.qinyu.expcetion.CustomException;
@@ -82,6 +83,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             lambdaUpdate().eq(User::getUsername, username).set(User::getUpdateTime, LocalDateTime.now()).update();
         } else {
             throw new CustomException("重置用户密码失败");
+        }
+    }
+
+    @Override
+    public void resetAdmin(String username, String newPassword, String newEmailPassword) {
+        System.out.println("username:" + username);
+        System.out.println("newPassword:" + newPassword);
+        System.out.println("newEmailPassword:" + newEmailPassword);
+        User record = lambdaQuery().eq(User::getUsername, username).one();
+        if (record == null) throw new CustomException("用户" + username + "未注册");
+        UserResetAdminDTO dto = new UserResetAdminDTO();
+        dto.setUsername(username);
+        if (newPassword != null && !newPassword.isEmpty()) {
+            String password = DigestUtils.md5DigestAsHex(newPassword.getBytes(StandardCharsets.UTF_8));
+            dto.setNewPassword(password);
+        }
+        if (newEmailPassword != null && !newEmailPassword.isEmpty()) {
+            String emailPassword = passwordEncoder.encode(newEmailPassword);
+            dto.setNewEmailPassword(emailPassword);
+        }
+        if (!userMapper.resetAdmin(dto)) {
+            throw new CustomException("重置密码失败");
         }
     }
 

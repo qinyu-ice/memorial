@@ -25,8 +25,7 @@ public class RecordController {
 
     @PostMapping
     public Result<Object> save(@RequestBody RecordDTO dto) {
-        recordService.save(new Record(null, dto.getUserId(), dto.getMartyrId(),
-                dto.getIgnite(), dto.getFlower(), dto.getMessage(), null));
+        recordService.save(new Record(null, dto.getUserId(), dto.getMartyrId(), dto.getFlower(), dto.getMessage(), null));
         return Result.ok("userId为" + dto.getUserId() + "的用户悼念了martyrId为" + dto.getMartyrId() + "的烈士");
     }
 

@@ -9,8 +9,6 @@ public class RecordDTO {
 
     private Integer martyrId;
 
-    private Integer ignite;
-
     private Integer flower;
 
     private String message;

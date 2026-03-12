@@ -13,6 +13,13 @@ token:
 
 # spring 相关配置
 spring:
+  data:
+    redis:
+      database: 1
+      host: localhost
+      port: 6379
+      password: 321520
+
   datasource:
     url: jdbc:mysql://localhost:3306/memorial
     username: root
