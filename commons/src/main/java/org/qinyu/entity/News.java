@@ -4,35 +4,25 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class User {
+public class News {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private String realName;
+    private String title;
 
-    private String username;
+    private String source;
 
-    private String password;
+    private String content;
 
-    private String email;
-
-    private String emailPassword;
-
-    private String phone;
-
-    private Integer permission;
-
-    private Integer isDelete;
+    // 插入时自动填充
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime time;
 
     // 插入时自动填充
     @TableField(fill = FieldFill.INSERT)

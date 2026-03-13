@@ -52,7 +52,6 @@ public class StoryController {
 
     @PostMapping(value = "/add")
     public Result<Story> add(@RequestBody Story story) {
-        story.setTime(LocalDateTime.now());
         storyService.save(story);
         return Result.ok("寻亲故事新增成功");
     }

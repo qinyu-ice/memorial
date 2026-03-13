@@ -24,6 +24,8 @@ public class Story {
 
     private String content;
 
+    // 插入时自动填充
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime time;
 
     // 插入时自动填充

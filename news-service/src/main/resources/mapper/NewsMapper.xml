@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.qinyu.mapper.NewsMapper">
+
+    <update id="updateNewsById" parameterType="org.qinyu.entity.News">
+        UPDATE news
+        SET title       = #{title},
+            source      = #{source},
+            content     = #{content},
+            time        = #{time},
+            update_time = now()
+        WHERE id = #{id}
+    </update>
+</mapper>
