@@ -31,7 +31,7 @@ public class NewsController {
                 .like(!title.isEmpty(), News::getTitle, title)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
-            return Result.no("暂无相关热点资讯");
+            return Result.ok("暂无相关热点资讯");
         }
         return Result.ok("成功获取第" + page + "页热点资讯", new PageVO<>(paged.getTotal(),
                 paged.getRecords()));

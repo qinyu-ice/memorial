@@ -56,7 +56,7 @@ public class UserController {
                 .like(!username.isEmpty(), User::getUsername, username)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
-            return Result.no("暂无相关用户");
+            return Result.ok("暂无相关用户");
         }
         List<UserDTO> userDTOList = new ArrayList<>();
         paged.getRecords().forEach(user -> {
@@ -76,7 +76,7 @@ public class UserController {
     @GetMapping(value = "/simple2/{username}")
     public Result<SimpleUserVO> findSimpleByUsername(@PathVariable String username) {
         if (username == null || username.trim().isEmpty()) {
-            return Result.no("用户名不能为空");
+            return Result.ok("用户名不能为空");
         }
         return Result.ok("成功获取用户名为" + username + "的简要用户信息", userService.getByUsername(username));
     }

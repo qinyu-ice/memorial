@@ -40,7 +40,7 @@ public class RecordController {
             if (result.data() != null) {
                 userId = result.data().getId();
             } else {
-                return Result.no("暂无相关用户的留言");
+                return Result.ok("暂无相关用户的留言");
             }
         }
         Page<SimpleRecordVO> paged = recordService.findByPage(page, pageSize, userId);
