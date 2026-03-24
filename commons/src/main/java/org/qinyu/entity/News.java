@@ -16,7 +16,11 @@ public class News {
 
     private String title;
 
+    private String subtitle;
+
     private String source;
+
+    private String img;
 
     private String content;
 

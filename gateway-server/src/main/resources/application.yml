@@ -2,42 +2,63 @@
 server:
   servlet:
     context-path: / # 为了便于开发此处省略应用程序上下文
-  port: 8901 # 为了便于开发此处使用 http 默认端口
+  port: 8080 # 为了便于开发此处使用 http 默认端口
 
 # spring 相关配置
 spring:
   application:
     name: gateway-server
+  # Redis 配置（解决Redis报错）
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 321520
+      database: 0
   cloud:
     gateway:
       routes:
-        - id: back-end-management
-          uri: lb://back-end
-          predicates:
-            - Path=/api/back-end/**
         - id: user-service
-          uri: lb://user-service
+          uri: http://localhost:8101
+          filters:
+            - RequestRateLimiter=10,20    # 最多同时接受 10 个请求，每秒最多处理 20 个请求
           predicates:
             - Path=/api/user/**
         - id: martyr-service
-          uri: lb://martyr-service
+          uri: http://localhost:8201
           predicates:
             - Path=/api/martyr/**
         - id: record-service
-          uri: lb://record-service
+          uri: http://localhost:8301
           predicates:
             - Path=/api/record/**
         - id: place-service
-          uri: lb://place-service
+          uri: http://localhost:8401
           predicates:
             - Path=/api/place/**
+        - id: email-login
+          uri: http://localhost:8501
+          predicates:
+            - Path=/api/email/**
+        - id: story-service
+          uri: http://localhost:8601
+          predicates:
+            - Path=/api/story/**
+        - id: news-service
+          uri: http://localhost:8701
+          predicates:
+            - Path=/api/news/**
+        - id: info-service
+          uri: http://localhost:8801
+          predicates:
+            - Path=/api/info/**
 
       # 跨域配置（解决前端跨域问题）
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "*"  # 允许所有源（生产环境需指定具体域名）
-            allowedMethods:  # 允许的请求方法
+            allowedOriginPatterns: "*"  # 允许所有源（生产环境需指定具体域名）
+            allowedMethods: # 允许的请求方法
               - GET
               - POST
               - PUT
@@ -50,4 +71,7 @@ management:
   endpoints:
     web:
       exposure:
-          include: gateway/routes  # 访问 http://localhost:8080/actuator/gateway/routes 可查看路由列表
+        include: gateway,routes,health # 访问 http://localhost:8080/actuator/gateway/routes 可查看路由列表
+  endpoint:
+    gateway:
+      access: unrestricted

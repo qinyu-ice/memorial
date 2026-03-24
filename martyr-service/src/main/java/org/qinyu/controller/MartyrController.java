@@ -43,8 +43,8 @@ public class MartyrController {
         Page<Martyr> paged = martyrService.lambdaQuery()
                 .like(!name.isEmpty(), Martyr::getName, name)
                 .page(Page.of(page, pageSize));
-        if(paged.getRecords().isEmpty()){
-            return Result.ok("暂无相关烈士信息");
+        if (paged.getRecords().isEmpty()) {
+            return Result.ok("暂无相关烈士信息", new PageVO<>(paged.getTotal(), paged.getRecords().stream().map(SimpleMartyrVO::new).toList()));
         }
         return Result.ok("成功获取第" + page + "页烈士名称", new PageVO<>(paged.getTotal(),
                 paged.getRecords().stream().map(SimpleMartyrVO::new).toList()));
@@ -69,8 +69,8 @@ public class MartyrController {
                 }
             }
         });
-        if(paged.getRecords().isEmpty()){
-            return Result.ok("暂无相关烈士信息");
+        if (paged.getRecords().isEmpty()) {
+            return Result.ok("暂无相关烈士信息", new PageVO<>(paged.getTotal(), paged.getRecords()));
         }
         return Result.ok("成功获取第" + page + "页烈士信息", new PageVO<>(paged.getTotal(),
                 paged.getRecords()));

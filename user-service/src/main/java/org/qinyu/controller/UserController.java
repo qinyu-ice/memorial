@@ -42,7 +42,7 @@ public class UserController {
 
     @PutMapping(value = "/resetAdmin")
     public Result<Object> resetAdmin(@RequestBody UserResetAdminDTO dto) {
-        userService.resetAdmin(dto.getUsername(), dto.getNewPassword(),dto.getNewEmailPassword());
+        userService.resetAdmin(dto.getUsername(), dto.getNewPassword(), dto.getNewEmailPassword());
         return Result.ok("用户" + dto.getUsername() + "重置密码成功");
     }
 
@@ -56,7 +56,7 @@ public class UserController {
                 .like(!username.isEmpty(), User::getUsername, username)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
-            return Result.ok("暂无相关用户");
+            return Result.ok("暂无相关用户", new PageVO<>(paged.getTotal(), null));
         }
         List<UserDTO> userDTOList = new ArrayList<>();
         paged.getRecords().forEach(user -> {

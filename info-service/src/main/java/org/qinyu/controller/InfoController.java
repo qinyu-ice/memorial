@@ -31,7 +31,7 @@ public class InfoController {
                 .like(!title.isEmpty(), Info::getTitle, title)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
-            return Result.ok("暂无相关寻亲信息");
+            return Result.ok("暂无相关寻亲信息", new PageVO<>(paged.getTotal(), paged.getRecords()));
         }
         return Result.ok("成功获取第" + page + "页寻亲信息", new PageVO<>(paged.getTotal(),
                 paged.getRecords()));

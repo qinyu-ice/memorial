@@ -2,7 +2,6 @@ package org.qinyu.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
-import org.qinyu.entity.Story;
 import org.qinyu.service.client.UserClient;
 import org.qinyu.tool.Result;
 import org.qinyu.dto.RecordDTO;
@@ -40,10 +39,13 @@ public class RecordController {
             if (result.data() != null) {
                 userId = result.data().getId();
             } else {
-                return Result.ok("暂无相关用户的留言");
+                return Result.ok("暂无相关用户", new PageVO<>(0L, null));
             }
         }
         Page<SimpleRecordVO> paged = recordService.findByPage(page, pageSize, userId);
+        if (paged.getRecords().isEmpty()) {
+            Result.ok("暂无相关用户的留言", new PageVO<>(paged.getTotal(), paged.getRecords()));
+        }
         return Result.ok("成功获取第" + page + "页留言", new PageVO<>(paged.getTotal(),
                 paged.getRecords()));
     }

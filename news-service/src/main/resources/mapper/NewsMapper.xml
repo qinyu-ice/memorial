@@ -5,7 +5,9 @@
     <update id="updateNewsById" parameterType="org.qinyu.entity.News">
         UPDATE news
         SET title       = #{title},
+            subtitle    = #{subtitle},
             source      = #{source},
+            img         = #{img},
             content     = #{content},
             time        = #{time},
             update_time = now()

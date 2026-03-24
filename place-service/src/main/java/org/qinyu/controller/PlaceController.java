@@ -61,8 +61,8 @@ public class PlaceController {
         }
 
         Page<Place> paged = placeService.page(pageParam, queryWrapper);
-        if(paged.getRecords().isEmpty()){
-            return Result.ok("暂无相关烈士纪念设施");
+        if (paged.getRecords().isEmpty()) {
+            return Result.ok("暂无相关烈士纪念设施", new PageVO<>(paged.getTotal(), paged.getRecords().stream().map(SimplePlaceVO::new).toList()));
         }
         return Result.ok("成功获取第" + page + "页烈士纪念设施", new PageVO<>(paged.getTotal(),
                 paged.getRecords().stream().map(SimplePlaceVO::new).toList()));

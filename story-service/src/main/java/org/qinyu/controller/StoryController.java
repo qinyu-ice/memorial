@@ -32,7 +32,7 @@ public class StoryController {
                 .orderByDesc(Story::getTime)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
-            return Result.ok("暂无相关寻亲故事");
+            return Result.ok("暂无相关寻亲故事", new PageVO<>(paged.getTotal(), paged.getRecords().stream().map(SimpleStoryVO::new).toList()));
         }
         return Result.ok("成功获取第" + page + "页简要寻亲故事", new PageVO<>(paged.getTotal(),
                 paged.getRecords().stream().map(SimpleStoryVO::new).toList()));
@@ -47,7 +47,7 @@ public class StoryController {
                 .like(!title.isEmpty(), Story::getTitle, title)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
-            return Result.ok("暂无相关寻亲故事");
+            return Result.ok("暂无相关寻亲故事", new PageVO<>(paged.getTotal(), paged.getRecords()));
         }
         return Result.ok("成功获取第" + page + "页寻亲故事", new PageVO<>(paged.getTotal(),
                 paged.getRecords()));
