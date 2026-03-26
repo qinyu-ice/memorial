@@ -12,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/news", produces = "application/json; charset=utf-8")
@@ -51,6 +54,29 @@ public class NewsController {
         }
         return Result.ok("成功获取第" + page + "页热点资讯", new PageVO<>(paged.getTotal(),
                 paged.getRecords()));
+    }
+
+    @GetMapping(value = "/getImg")
+    public Result<List<String>> getImg() {
+        List<String> imgList = newsService.lambdaQuery()
+                .select(News::getImg)
+                .last("LIMIT 6")
+                .list()
+                .stream()
+                .map(News::getImg)
+                // 处理路径拼接
+                .map(img -> {
+                    if (img == null || img.isEmpty()) {
+                        return img;
+                    }
+                    if (img.contains("/memorial/news")) {
+                        return "https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com" + img;
+                    } else {
+                        return "https://www.sctyjrsw.com" + img;
+                    }
+                })
+                .toList();
+        return Result.ok("成功获取热点资讯图片",imgList);
     }
 
     @PostMapping(value = "/add")
