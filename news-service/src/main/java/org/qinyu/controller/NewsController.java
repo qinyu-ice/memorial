@@ -12,9 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/news", produces = "application/json; charset=utf-8")
@@ -27,7 +25,11 @@ public class NewsController {
 
     @GetMapping(value = "/{id}")
     public Result<News> findById(@PathVariable Integer id) {
-        return Result.ok("成功获取id为" + id + "的热点资讯", newsService.getById(id));
+        News news = newsService.getById(id);
+        if (news == null) {
+            return Result.ok("暂无id为" + id + "的热点资讯");
+        }
+        return Result.ok("成功获取id为" + id + "的热点资讯", news);
     }
 
     @GetMapping(value = "/{page}/{pageSize}")
@@ -76,7 +78,7 @@ public class NewsController {
                     }
                 })
                 .toList();
-        return Result.ok("成功获取热点资讯图片",imgList);
+        return Result.ok("成功获取热点资讯图片", imgList);
     }
 
     @PostMapping(value = "/add")

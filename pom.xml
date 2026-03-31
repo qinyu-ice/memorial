@@ -28,6 +28,7 @@
         <module>news-service</module>
         <module>info-service</module>
         <module>gateway-server</module>
+        <module>martyr-story-service</module>
     </modules>
 
     <properties>

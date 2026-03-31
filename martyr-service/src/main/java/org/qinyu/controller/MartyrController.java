@@ -27,6 +27,9 @@ public class MartyrController {
     @GetMapping(value = "/{id}")
     public Result<Martyr> findById(@PathVariable Integer id) {
         Martyr martyr = martyrService.getById(id);
+        if (martyr == null) {
+            return Result.ok("暂无id为" + id + "的烈士信息");
+        }
         if (martyr.getPhoto().contains("https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com")) {
             martyr.setPhoto("https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com" + martyr.getPhoto());
         } else {

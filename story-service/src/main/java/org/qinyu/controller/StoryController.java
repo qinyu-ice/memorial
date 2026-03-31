@@ -2,15 +2,12 @@ package org.qinyu.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
-import org.qinyu.entity.Martyr;
 import org.qinyu.tool.Result;
 import org.qinyu.entity.Story;
 import org.qinyu.vo.PageVO;
 import org.qinyu.vo.SimpleStoryVO;
 import org.qinyu.service.StoryService;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(value = "/api/story", produces = "application/json; charset=utf-8")
@@ -21,7 +18,11 @@ public class StoryController {
 
     @GetMapping(value = "/{id}")
     public Result<Story> findById(@PathVariable Integer id) {
-        return Result.ok("成功获取id为" + id + "的寻亲故事", storyService.getById(id));
+        Story story = storyService.getById(id);
+        if (story == null) {
+            return Result.ok("暂无id为" + id + "的寻亲故事");
+        }
+        return Result.ok("成功获取id为" + id + "的寻亲故事", story);
     }
 
     @GetMapping(value = "/{page}/{pageSize}")

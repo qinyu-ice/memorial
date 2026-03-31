@@ -35,6 +35,9 @@ public class PlaceController {
     @GetMapping(value = "/{id}")
     public Result<Place> findById(@PathVariable Integer id) {
         Place place = placeService.getById(id);
+        if (place == null) {
+            return Result.ok("暂无id为" + id + "的烈士纪念设施");
+        }
         place.setImg("https://memorial-dazhou.oss-cn-chengdu.aliyuncs.com" + place.getImg());
         return Result.ok("成功获取id为" + id + "的烈士纪念设施", place);
     }

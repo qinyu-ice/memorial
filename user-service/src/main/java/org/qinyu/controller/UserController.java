@@ -70,7 +70,10 @@ public class UserController {
     @GetMapping(value = "/simple/{id}")
     public Result<SimpleUserVO> findSimpleById(@PathVariable Integer id) {
         User user = userService.getById(id);
-        return Result.ok("成功获取id为" + id + "的简要用户信息", new SimpleUserVO(user));
+        if (user == null) {
+            return Result.ok("暂无id为" + id + "的用户");
+        }
+        return Result.ok("成功获取用户" + user.getUsername() + "的简要信息", new SimpleUserVO(user));
     }
 
     @GetMapping(value = "/simple2/{username}")
@@ -78,7 +81,11 @@ public class UserController {
         if (username == null || username.trim().isEmpty()) {
             return Result.ok("用户名不能为空");
         }
-        return Result.ok("成功获取用户名为" + username + "的简要用户信息", userService.getByUsername(username));
+        SimpleUserVO simpleUserVO = userService.getByUsername(username);
+        if (simpleUserVO == null) {
+            return Result.ok("暂无用户名为" + username + "的用户");
+        }
+        return Result.ok("成功获取用户名为" + username + "的简要信息", simpleUserVO);
     }
 
     @PostMapping(value = "/add")
@@ -89,13 +96,14 @@ public class UserController {
 
     @DeleteMapping(value = "/delete/{id}")
     public Result<Object> delete(@PathVariable Integer id) {
+        String username = userService.getById(id).getUsername();
         userService.deleteById(id);
-        return Result.ok("用户" + id + "删除成功");
+        return Result.ok("用户" + username + "删除成功");
     }
 
     @PostMapping(value = "/update")
     public Result<Object> update(@RequestBody UserUpdateDTO dto) {
         userService.update(dto);
-        return Result.ok("用户" + dto.getId() + "更新成功");
+        return Result.ok("用户" + dto.getUsername() + "更新成功");
     }
 }

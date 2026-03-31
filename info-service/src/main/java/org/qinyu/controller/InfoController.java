@@ -19,7 +19,11 @@ public class InfoController {
 
     @GetMapping(value = "/{id}")
     public Result<Info> findById(@PathVariable Integer id) {
-        return Result.ok("成功获取id为" + id + "的寻亲信息", infoService.getById(id));
+        Info info = infoService.getById(id);
+        if (info == null) {
+            return Result.ok("暂无id为" + id + "的寻亲信息");
+        }
+        return Result.ok("成功获取id为" + id + "的寻亲信息", info);
     }
 
     @GetMapping(value = "/{page}/{pageSize}")
