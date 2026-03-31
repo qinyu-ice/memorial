@@ -46,6 +46,7 @@ public class StoryController {
     ) {
         Page<Story> paged = storyService.lambdaQuery()
                 .like(!title.isEmpty(), Story::getTitle, title)
+                .orderByDesc(Story::getTime)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
             return Result.ok("暂无相关寻亲故事", new PageVO<>(paged.getTotal(), paged.getRecords()));

@@ -16,6 +16,8 @@ public class Place {
 
     private String name;
 
+    private String honor;
+
     private String img;
 
     private String longitude;

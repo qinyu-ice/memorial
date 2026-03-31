@@ -3,6 +3,7 @@ package org.qinyu.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.qinyu.entity.MartyrStory;
+import org.qinyu.entity.News;
 import org.qinyu.service.MartyrStoryService;
 import org.qinyu.tool.Result;
 import org.qinyu.vo.PageVO;
@@ -22,6 +23,7 @@ public class MartyrStoryController {
     ) {
         Page<MartyrStory> paged = martyrStoryService.lambdaQuery()
                 .like(!title.isEmpty(), MartyrStory::getTitle, title)
+                .orderByDesc(MartyrStory::getTime)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
             return Result.ok("暂无相关英烈故事", new PageVO<>(paged.getTotal(), paged.getRecords()));

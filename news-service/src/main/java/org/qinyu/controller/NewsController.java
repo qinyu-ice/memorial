@@ -39,6 +39,7 @@ public class NewsController {
     ) {
         Page<News> paged = newsService.lambdaQuery()
                 .like(!title.isEmpty(), News::getTitle, title)
+                .orderByDesc(News::getTime)
                 .page(Page.of(page, pageSize));
         // 遍历查询结果，处理每个烈士的photo
         paged.getRecords().forEach(news -> {
@@ -62,6 +63,7 @@ public class NewsController {
     public Result<List<String>> getImg() {
         List<String> imgList = newsService.lambdaQuery()
                 .select(News::getImg)
+                .orderByDesc(News::getTime)
                 .last("LIMIT 6")
                 .list()
                 .stream()

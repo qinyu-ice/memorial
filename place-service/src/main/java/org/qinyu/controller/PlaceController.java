@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.qinyu.entity.News;
 import org.qinyu.tool.Result;
 import org.qinyu.entity.Place;
 import org.qinyu.util.AliOssUtil;
@@ -60,7 +61,7 @@ public class PlaceController {
         LambdaQueryWrapper<Place> queryWrapper = new LambdaQueryWrapper<>();
         // 如果name参数不为空且不是空字符串，添加模糊查询条件
         if (name != null && !name.trim().isEmpty()) {
-            queryWrapper.like(Place::getName, name.trim());
+            queryWrapper.like(Place::getName, name.trim()).orderByDesc(Place::getCreateTime);
         }
 
         Page<Place> paged = placeService.page(pageParam, queryWrapper);

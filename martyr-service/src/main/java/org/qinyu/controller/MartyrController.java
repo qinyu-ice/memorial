@@ -2,6 +2,7 @@ package org.qinyu.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
+import org.qinyu.entity.News;
 import org.qinyu.tool.Result;
 import org.qinyu.dto.MartyrDTO;
 import org.qinyu.entity.Martyr;
@@ -45,6 +46,7 @@ public class MartyrController {
     ) {
         Page<Martyr> paged = martyrService.lambdaQuery()
                 .like(!name.isEmpty(), Martyr::getName, name)
+                .orderByDesc(Martyr::getCreateTime)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
             return Result.ok("暂无相关烈士信息", new PageVO<>(paged.getTotal(), paged.getRecords().stream().map(SimpleMartyrVO::new).toList()));
@@ -60,6 +62,7 @@ public class MartyrController {
     ) {
         Page<Martyr> paged = martyrService.lambdaQuery()
                 .like(!name.isEmpty(), Martyr::getName, name)
+                .orderByDesc(Martyr::getCreateTime)
                 .page(Page.of(page, pageSize));
         // 遍历查询结果，处理每个烈士的photo
         paged.getRecords().forEach(martyr -> {

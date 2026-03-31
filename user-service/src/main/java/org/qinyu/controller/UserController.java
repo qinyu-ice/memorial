@@ -54,6 +54,7 @@ public class UserController {
         Page<User> paged = userService.lambdaQuery()
                 .like(User::getPermission, 2)
                 .like(!username.isEmpty(), User::getUsername, username)
+                .orderByDesc(User::getCreateTime)
                 .page(Page.of(page, pageSize));
         if (paged.getRecords().isEmpty()) {
             return Result.ok("暂无相关用户", new PageVO<>(paged.getTotal(), null));

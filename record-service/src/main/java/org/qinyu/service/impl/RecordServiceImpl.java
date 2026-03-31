@@ -3,6 +3,7 @@ package org.qinyu.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
+import org.qinyu.entity.News;
 import org.qinyu.entity.Record;
 import org.qinyu.entity.User;
 import org.qinyu.tool.Result;
@@ -29,6 +30,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> impleme
     public Page<SimpleRecordVO> findByPage(Integer page, Integer pageSize, Integer userId) {
         Page<Record> paged = lambdaQuery()
                 .like(userId != 0, Record::getUserId, userId)
+                .orderByDesc(Record::getTime)
                 .page(Page.of(page, pageSize));
         Page<SimpleRecordVO> simpleRecordVOPageVO = new Page<>();
         simpleRecordVOPageVO.setTotal(paged.getTotal());
