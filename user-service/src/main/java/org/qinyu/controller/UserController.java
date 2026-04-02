@@ -53,6 +53,7 @@ public class UserController {
     ) {
         Page<User> paged = userService.lambdaQuery()
                 .like(User::getPermission, 2)
+                .like(User::getIsDelete, 0)
                 .like(!username.isEmpty(), User::getUsername, username)
                 .orderByDesc(User::getCreateTime)
                 .page(Page.of(page, pageSize));
