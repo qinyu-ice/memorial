@@ -12,4 +12,6 @@ public class UserAddDTO {
     private String email;
 
     private String phone;
+
+    private Integer permission;
 }

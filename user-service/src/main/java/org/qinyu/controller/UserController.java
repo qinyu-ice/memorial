@@ -46,13 +46,13 @@ public class UserController {
         return Result.ok("用户" + dto.getUsername() + "重置密码成功");
     }
 
-    @GetMapping(value = "/{page}/{pageSize}")
+    @GetMapping(value = "/{page}/{pageSize}/{permission}")
     public Result<PageVO<UserDTO>> getUserByPage(
-            @PathVariable Integer page, @PathVariable Integer pageSize,
+            @PathVariable Integer page, @PathVariable Integer pageSize, @PathVariable Integer permission,
             @RequestParam(required = false, defaultValue = "") String username
     ) {
         Page<User> paged = userService.lambdaQuery()
-                .like(User::getPermission, 2)
+                .like(User::getPermission, permission)
                 .like(User::getIsDelete, 0)
                 .like(!username.isEmpty(), User::getUsername, username)
                 .orderByDesc(User::getCreateTime)

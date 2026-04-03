@@ -114,7 +114,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (record != null) throw new CustomException("用户名" + dto.getUsername() + "已被占用");
         String password = DigestUtils.md5DigestAsHex("123456".getBytes(StandardCharsets.UTF_8));
         String emailPassword = passwordEncoder.encode("123456");
-        if (!save(new User(null, dto.getRealName(), dto.getUsername(), password, dto.getEmail(), emailPassword, dto.getPhone(), 2, 0, LocalDateTime.now(), LocalDateTime.now())))
+        if (!save(new User(null, dto.getRealName(), dto.getUsername(), password, dto.getEmail(), emailPassword, dto.getPhone(), dto.getPermission(), 0, LocalDateTime.now(), LocalDateTime.now())))
             throw new CustomException("用户新增失败");
     }
 
