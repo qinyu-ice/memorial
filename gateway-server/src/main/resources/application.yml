@@ -21,37 +21,93 @@ spring:
         - id: user-service
           uri: http://localhost:8101
           filters:
-            - RequestRateLimiter=10,20    # 最多同时接受 10 个请求，每秒最多处理 20 个请求
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
           predicates:
             - Path=/api/user/**
         - id: martyr-service
           uri: http://localhost:8201
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
           predicates:
             - Path=/api/martyr/**
         - id: record-service
           uri: http://localhost:8301
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
           predicates:
             - Path=/api/record/**
         - id: place-service
           uri: http://localhost:8401
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
           predicates:
             - Path=/api/place/**
         - id: email-login
           uri: http://localhost:8501
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
           predicates:
             - Path=/api/email/**
         - id: story-service
           uri: http://localhost:8601
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
           predicates:
             - Path=/api/story/**
         - id: news-service
           uri: http://localhost:8701
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
           predicates:
             - Path=/api/news/**
         - id: info-service
           uri: http://localhost:8801
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
           predicates:
             - Path=/api/info/**
+        - id: martyr-story-service
+          uri: http://localhost:8901
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10  # 最多同时接受 10 个请求
+                redis-rate-limiter.burstCapacity: 20  # 每秒最多处理 20 个请求
+                key-resolver: "#{@ipKeyResolver}"     # 根据 IP 限流
+          predicates:
+            - Path=/api/martyrStory/**
 
       # 跨域配置（解决前端跨域问题）
       globalcors:
