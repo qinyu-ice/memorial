@@ -52,6 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Map<String, Object> login(String username, String password) {
+        if (username == null || username.isEmpty()) throw new CustomException("请输入用户名");
         User record = lambdaQuery().eq(User::getUsername, username).one();
         if (record == null) throw new CustomException("用户" + username + "未注册");
         if (record.getIsDelete() == 1) throw new CustomException("用户" + username + "已删除");
