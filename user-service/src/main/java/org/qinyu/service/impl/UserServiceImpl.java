@@ -88,10 +88,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    public void resetEmail(String username, String emailPassword, String emailPassword2) {
+        User record = lambdaQuery().eq(User::getUsername, username).one();
+        if (record == null) throw new CustomException("用户" + username + "未注册");
+        if (!passwordEncoder.matches(emailPassword, record.getEmailPassword()))
+            throw new CustomException("用户名或密码错误");
+        if (emailPassword.equals(emailPassword2)) throw new CustomException("新旧密码不能一致");
+        emailPassword2 = passwordEncoder.encode(emailPassword2);
+        if (lambdaUpdate().eq(User::getUsername, username).set(User::getPassword, emailPassword2).update()) {
+            // 当密码重置成功时，更新更新时间
+            lambdaUpdate().eq(User::getUsername, username).set(User::getUpdateTime, LocalDateTime.now()).update();
+        } else {
+            throw new CustomException("重置用户密码失败");
+        }
+    }
+
+    @Override
     public void resetAdmin(String username, String newPassword, String newEmailPassword) {
-        System.out.println("username:" + username);
-        System.out.println("newPassword:" + newPassword);
-        System.out.println("newEmailPassword:" + newEmailPassword);
         User record = lambdaQuery().eq(User::getUsername, username).one();
         if (record == null) throw new CustomException("用户" + username + "未注册");
         UserResetAdminDTO dto = new UserResetAdminDTO();
