@@ -8,6 +8,7 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -40,6 +41,10 @@ public class UserModel implements UserDetails {
 
     @Column(nullable = false, length = 32)
     private Integer permission;
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 
     @Transient
     private String token;

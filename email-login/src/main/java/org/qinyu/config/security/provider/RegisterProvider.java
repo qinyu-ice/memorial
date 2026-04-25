@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -42,6 +43,11 @@ public class RegisterProvider extends BaseAuthenticationProvider<RegisterToken> 
             model.setUsername(nick);
         }
         model.setEmailPassword(encoder.encode(entry.emailPassword()));
+        model.setRealName("");
+        model.setPhone("");
+        model.setPermission(2);
+        model.setCreateTime(LocalDateTime.now());
+        model.setUpdateTime(LocalDateTime.now());
         return model;
     }
 }
