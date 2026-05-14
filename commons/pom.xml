@@ -58,4 +58,8 @@
             <version>3.18.0</version>
         </dependency>
     </dependencies>
+<!--    <properties>-->
+<!--        &lt;!&ndash; 跳过Spring Boot打包 &ndash;&gt;-->
+<!--        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>-->
+<!--    </properties>-->
 </project>
