@@ -2,6 +2,7 @@ package org.qinyu.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.qinyu.entity.Permission;
+import org.qinyu.entity.PermissionUserBind;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface PermissionService extends IService<Permission> {
     Boolean delete(String id);
 
     Boolean deleteBatch(List<String> ids);
+
+    Boolean bindPermissionList(List<PermissionUserBind> binds);
+
+    Boolean unbindPermissionList(List<PermissionUserBind> binds);
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.qinyu.entity.Permission;
+import org.qinyu.entity.PermissionUserBind;
 import org.qinyu.service.PermissionService;
 import org.qinyu.tool.Result;
 import org.qinyu.vo.PageVO;
@@ -67,5 +68,17 @@ public class PermissionController {
     public Result<Boolean> deleteBatch(@RequestParam List<String> ids) {
         Boolean result = permissionService.deleteBatch(ids);
         return Result.ok("权限批量删除成功", result);
+    }
+
+    @PostMapping(value = "/bindBatch")
+    public Result<Boolean> bindPermissionList(@RequestBody List<PermissionUserBind> binds) {
+        Boolean result = permissionService.bindPermissionList(binds);
+        return Result.ok("权限绑定成功", result);
+    }
+
+    @PostMapping(value = "unbindBatch")
+    public Result<Boolean> unbindPermissionList(@RequestBody List<PermissionUserBind> binds) {
+        Boolean result = permissionService.unbindPermissionList(binds);
+        return Result.ok("权限解绑成功", result);
     }
 }

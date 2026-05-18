@@ -74,20 +74,26 @@ public class PlaceController {
 
     @PostMapping("/add")
     public Result<Object> add(@RequestBody Place place) {
-        placeService.save(place);
-        return Result.ok("烈士纪念设施新增成功");
+        Boolean result = placeService.save(place);
+        return Result.ok("烈士纪念设施新增成功", result);
     }
 
     @PostMapping("/update")
     public Result<Object> update(@RequestBody Place place) {
-        placeService.updateById(place);
-        return Result.ok("烈士纪念设施" + place.getName() + "更新成功");
+        Boolean result = placeService.updateById(place);
+        return Result.ok("烈士纪念设施" + place.getName() + "更新成功", result);
     }
 
     @DeleteMapping("/delete/{id}")
     public Result<Object> delete(@PathVariable Integer id) {
-        placeService.removeById(id);
-        return Result.ok("烈士纪念设施删除成功");
+        Boolean result = placeService.removeById(id);
+        return Result.ok("烈士纪念设施删除成功", result);
+    }
+
+    @DeleteMapping(value = "/delete/batch")
+    public Result<Object> deleteBatch(@RequestBody List<Integer> ids) {
+        Boolean result = placeService.removeByIds(ids);
+        return Result.ok("烈士纪念设施批量删除成功", result);
     }
 
     @PostMapping("/upload")
